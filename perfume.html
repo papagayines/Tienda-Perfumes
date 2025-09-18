@@ -3,77 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Detalle de Perfume</title>
+<title>Perfume</title>
 <style>
-body { font-family: Arial, sans-serif; background-color: #f7f5f0; color:#333; margin:0; padding:0; }
-header { background-color:#d1c4b2; padding:20px; text-align:center; }
-h1 { margin:0; }
-.container { display:flex; flex-direction:column; align-items:center; padding:20px; }
-img { max-width:300px; border-radius:10px; margin-bottom:20px; }
-select, button { padding:10px; font-size:16px; margin:10px 0; border-radius:5px; border:none; }
-button { background-color:#8d6e63; color:white; cursor:pointer; }
-.description { max-width:500px; text-align:center; margin-bottom:20px; }
+body { font-family:'Poppins', sans-serif; margin:0; background:#f5f5f5; color:#333; }
+header { background:#6b5b95; color:#fff; padding:20px; text-align:center; position:sticky; top:0; z-index:100; }
+header h1 { margin:0; }
+main { max-width:900px; margin:20px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
+img { max-width:100%; border-radius:12px; }
+h2 { color:#563d7c; margin-top:20px; }
+label { display:block; margin-top:10px; }
+select, input[type="number"], input, textarea { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+button { background:#6b5b95; color:#fff; border:none; padding:10px 15px; margin-top:10px; border-radius:5px; cursor:pointer; transition:0.3s; }
+button:hover { background:#563d7c; }
+#cart { position:fixed; top:20px; right:20px; background:#fff; border-radius:10px; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); max-width:300px; display:none; }
+#cart h3 { margin:0; }
+.cart-item { display:flex; justify-content:space-between; margin-top:10px; }
+.cart-item span { margin-left:5px; }
+footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){emailjs.init("user_XXXXXXXXXXXXXXXX");})();
+</script>
 </head>
 <body>
 <header>
-  <h1 id="perfumeName">Perfume</h1>
+<h1>Perfume</h1>
+<button onclick="toggleCart()">Carrito 🛒</button>
 </header>
 
-<div class="container">
-  <img id="perfumeImg" src="" alt="">
-  <p class="description" id="perfumeDesc"></p>
+<main>
+<img id="perfumeImg" src="" alt="Perfume">
+<h2 id="perfumeName"></h2>
+<p id="perfumeDesc"></p>
 
-  <label for="sizeSelect">Selecciona tamaño:</label>
-  <select id="sizeSelect">
-    <option value="33000">30 ml - 33.000 COP</option>
-    <option value="45000">50 ml - 45.000 COP</option>
-    <option value="90000">110 ml - 90.000 COP</option>
-  </select>
+<label>Selecciona Mililitros y Precio:</label>
+<select id="sizeSelect">
+  <option value="30000">30 ml - 33.000 COP</option>
+  <option value="45000">50 ml - 45.000 COP</option>
+  <option value="90000">110 ml - 90.000 COP</option>
+</select>
+<button onclick="addToCart()">Añadir al carrito</button>
 
-  <button onclick="addToCart()">Agregar al carrito</button>
+<h2>Finalizar Compra</h2>
+<label>Nombre completo:</label>
+<input type="text" id="custName">
+<label>Teléfono / WhatsApp:</label>
+<input type="text" id="custPhone">
+<label>Dirección:</label>
+<textarea id="custAddress"></textarea>
+<label>Método de pago:</label>
+<select id="payMethod">
+  <option value="Nequi">Nequi</option>
+  <option value="Transferencia">Transferencia</option>
+  <option value="Efectivo">Efectivo</option>
+</select>
+<button onclick="checkout()">Enviar Pedido</button>
+</main>
+
+<div id="cart">
+<h3>Carrito</h3>
+<div id="cartItems"></div>
+<p>Total: <span id="cartTotal">0</span> COP</p>
 </div>
+
+<footer>&copy; 2025 Tienda de Perfumes</footer>
 
 <script>
 // Datos de perfumes: imagen y descripción
-const perfumeData = {
-  "AcquaDiGioGiorgioArmani": {img:"img/AcquaDiGioGiorgioArmani.jpg", desc:"Perfume muy fresco, excelente para días calurosos o de actividad física."},
-  "SauvageDior": {img:"img/SauvageDior.jpg", desc:"Fresco y amaderado, ideal para la noche."},
-  "CHMenCH": {img:"img/CHMenCH.jpg", desc:"Clásico, elegante y versátil para cualquier ocasión."},
-  "CKBe": {img:"img/CKBe.jpg", desc:"Unisex, suave y refrescante."},
-  "CloudArianaGrande": {img:"img/CloudArianaGrande.jpg", desc:"Dulce y suave, ideal para jóvenes."},
-  // ... Aquí agregas los 76 perfumes con img y desc
-  "BurberryHer": {img:"img/BurberryHer.jpg", desc:"Perfume femenino, frutal y elegante."}
+const perfumesInfo = {
+"AcquaDiGioGiorgioArmani":{img:"img/acqua-di-gio.jpg",desc:"Perfume fresco, ideal para días calurosos o actividad física."},
+"SauvageDior":{img:"img/sauvage.jpg",desc:"Aroma intenso, perfecto para cualquier ocasión."},
+// …aquí incluir los 76 perfumes con su imagen y descripción
 };
 
-// Obtener el perfume desde la URL
-const params = new URLSearchParams(window.location.search);
-const perfumeName = params.get("name");
+// Carrito
+let cart = [];
 
-// Mostrar datos
-if(perfumeData[perfumeName]){
-  document.getElementById("perfumeName").innerText = perfumeName.replace(/([A-Z])/g," $1").trim();
-  document.getElementById("perfumeImg").src = perfumeData[perfumeName].img;
-  document.getElementById("perfumeDesc").innerText = perfumeData[perfumeName].desc;
-} else {
-  document.getElementById("perfumeName").innerText = "Perfume no encontrado";
+// Obtener perfume desde query string
+const params = new URLSearchParams(window.location.search);
+const perfumeName = params.get('name');
+const info = perfumesInfo[perfumeName];
+
+if(info){
+  document.getElementById('perfumeName').innerText = perfumeName.replace(/([A-Z])/g,' $1').trim();
+  document.getElementById('perfumeDesc').innerText = info.desc;
+  document.getElementById('perfumeImg').src = info.img;
 }
 
-// Función agregar al carrito
+// Funciones del carrito
+function toggleCart(){
+  const c = document.getElementById('cart');
+  c.style.display = c.style.display === 'none' ? 'block' : 'none';
+}
+
 function addToCart(){
-  const sizeSelect = document.getElementById("sizeSelect");
+  const sizeSelect = document.getElementById('sizeSelect');
   const price = parseInt(sizeSelect.value);
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-  // Revisar si ya está en el carrito
-  const exist = cart.find(p => p.name===perfumeName && p.size===sizeSelect.selectedIndex);
-  if(exist){
-    exist.qty += 1;
-  } else {
-    cart.push({name:perfumeName, display:document.getElementById("perfumeName").innerText, size:sizeSelect.selectedIndex, price:price, qty:1});
-  }
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Producto agregado al carrito");
+  cart.push({name:perfumeName,size:sizeSelect.options[sizeSelect.selectedIndex].text,price:price});
+  updateCart();
+}
+
+function updateCart(){
+  const cartDiv = document.getElementById('cartItems');
+  cartDiv.innerHTML = "";
+  let total = 0;
+  cart.forEach((item,index)=>{
+    total+=item.price;
+    const div = document.createElement('div');
+    div.className="cart-item";
+    div.innerHTML=`<span>${item.name} (${item.size})</span><span>${item.price} COP <button onclick="removeItem(${index})">❌</button></span>`;
+    cartDiv.appendChild(div);
+  });
+  document.getElementById('cartTotal').innerText = total;
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  updateCart();
+}
+
+// Checkout con EmailJS
+function checkout(){
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
+  const address = document.getElementById('custAddress').value;
+  const method = document.getElementById('payMethod').value;
+  if(cart.length===0){ alert("El carrito está vacío"); return; }
+  if(!name || !phone || !address){ alert("Completa tus datos"); return; }
+
+  let message = `Pedido de ${name}\nTel: ${phone}\nDirección: ${address}\nPago: ${method}\n\nItems:\n`;
+  cart.forEach(item=>{
+    message+=`${item.name} (${item.size}) - ${item.price} COP\n`;
+  });
+
+  emailjs.send("service_4zsh227","template_9pw5f7b",{message:message})
+  .then(response=>{ alert("Pedido enviado exitosamente!"); cart=[]; updateCart(); })
+  .catch(err=>{ alert("Error al enviar pedido"); console.log(err); });
 }
 </script>
 </body>
