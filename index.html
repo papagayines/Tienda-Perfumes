@@ -9,153 +9,144 @@ body { font-family:'Poppins', sans-serif; margin:0; background:#f5f5f5; color:#3
 header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
 header h1 { margin:0; }
 section { padding:40px 20px; max-width:1200px; margin:0 auto; }
-h2 { color:#563d7c; margin-bottom:10px; }
-h3 { color:#6b5b95; margin-bottom:10px; }
-.grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:30px; }
-.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer; text-decoration:none; color:#6b5b95; }
+h2 { color:#563d7c; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; }
 .card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-.card h3 { margin-top:10px; font-size:1em; }
-footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
+.card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
 #search-container { text-align:center; margin:20px 0; }
-#search-input { padding:8px 12px; width:250px; border-radius:6px; border:1px solid #ccc; }
-#search-results { margin-top:10px; }
-#search-results a { display:block; margin:5px 0; color:#6b5b95; text-decoration:none; }
-#search-results a:hover { text-decoration:underline; }
-@media(max-width:900px) {.grid {grid-template-columns:repeat(2,1fr);}}
-@media(max-width:500px) {.grid {grid-template-columns:1fr;}}
+#search-input { padding:10px; width:300px; max-width:90%; border-radius:8px; border:1px solid #ccc; }
+#search-results { margin-top:10px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+#search-results a { text-decoration:none; color:#563d7c; background:#eee; padding:5px 10px; border-radius:5px; transition:0.3s; }
+#search-results a:hover { background:#6b5b95; color:#fff; }
+footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
 </style>
 </head>
 <body>
 
 <header>
 <h1>Tienda de Perfumes</h1>
-</header>
-
 <div id="search-container">
   <input type="text" id="search-input" placeholder="Buscar perfume..." onkeyup="buscarPerfume()">
   <div id="search-results"></div>
 </div>
+</header>
 
-<!-- SECCIÓN HOMBRES -->
+<!-- Sección: Hombres -->
 <section id="hombres">
 <h2>Perfumes de Hombre</h2>
 <div class="grid">
-<a href="9PMCH.html" class="card"><h3>9 PM</h3></a>
-<a href="212NYCCH.html" class="card"><h3>212 NYC</h3></a>
-<a href="212VIPBlackCH.html" class="card"><h3>212 VIP Black</h3></a>
-<a href="212VIPRoseCH.html" class="card"><h3>212 VIP Rose</h3></a>
-<a href="AcquaDiGioGiorgioArmani.html" class="card"><h3>Acqua Di Gio</h3></a>
-<a href="CHMenCH.html" class="card"><h3>CH Men</h3></a>
-<a href="CKBe.html" class="card"><h3>CK Be</h3></a>
-<a href="CloudArianaGrande.html" class="card"><h3>Cloud Ariana Grande</h3></a>
-<a href="ClubDeNuitArmaf.html" class="card"><h3>Club De Nuit Armaf</h3></a>
-<a href="DelinaParfumsDeMarly.html" class="card"><h3>Delina</h3></a>
-<a href="DevotionD&G.html" class="card"><h3>Devotion D&G</h3></a>
-<a href="DubayChicolat.html" class="card"><h3>Dubay Chocolat</h3></a>
-<a href="EclairEclear.html" class="card"><h3>Eclair</h3></a>
-<a href="EuphoriaCK.html" class="card"><h3>Euphoria CK</h3></a>
-<a href="FameRabanne.html" class="card"><h3>Fame</h3></a>
-<a href="GodOfFire(unisex).html" class="card"><h3>God Of Fire</h3></a>
-<a href="GoldFreshMoschino.html" class="card"><h3>Gold Fresh</h3></a>
-<a href="GoodGirlCH.html" class="card"><h3>Good Girl</h3></a>
-<a href="HugoBossNight.html" class="card"><h3>Hugo Boss Night</h3></a>
-<a href="InvictusVictoryPacoRabanne.html" class="card"><h3>Invictus Victory</h3></a>
-<a href="J'adoreDior.html" class="card"><h3>J'adore Dior</h3></a>
-<a href="JoyDior.html" class="card"><h3>Joy Dior</h3></a>
-<a href="KhamrahAlHaramain.html" class="card"><h3>Khamrah Al Haramain</h3></a>
-<a href="LaVieEstBelle.html" class="card"><h3>La Vie Est Belle</h3></a>
-<a href="LacosteBlanca.html" class="card"><h3>Lacoste Blanca</h3></a>
-<a href="LacosteNoir.html" class="card"><h3>Lacoste Noir</h3></a>
-<a href="LatafgaEclaire.html" class="card"><h3>Latafga Eclaire</h3></a>
-<a href="LaytonParfumsDeMarly.html" class="card"><h3>Layton</h3></a>
-<a href="LeBeauLeParfumJPG.html" class="card"><h3>Le Beau Le Parfum</h3></a>
-<a href="LeMaleElixirJPG.html" class="card"><h3>Le Male Elixir</h3></a>
-<a href="LightBlue D&G.html" class="card"><h3>Light Blue D&G</h3></a>
-<a href="Meow.html" class="card"><h3>Meow</h3></a>
-<a href="MissDior.html" class="card"><h3>Miss Dior</h3></a>
-<a href="MontBlancExplorer.html" class="card"><h3>Mont Blanc Explorer</h3></a>
-<a href="MontBlancLegend.html" class="card"><h3>Mont Blanc Legend</h3></a>
-<a href="NinaNinaRicci.html" class="card"><h3>Nina Nina Ricci</h3></a>
-<a href="NitroRed.html" class="card"><h3>Nitro Red</h3></a>
-<a href="NobleBlushLataffa.html" class="card"><h3>Noble Blush</h3></a>
-<a href="OdisseyChocolatDubay.html" class="card"><h3>Odyssey Chocolat Dubay</h3></a>
-<a href="OdysseyCandeeArmaf.html" class="card"><h3>Odyssey Candee</h3></a>
-<a href="OdysseyMandarin.html" class="card"><h3>Odyssey Mandarin</h3></a>
-<a href="OlympeaPacoRabanne.html" class="card"><h3>Olympea Paco Rabanne</h3></a>
-<a href="OmbreLeatherTomFord.html" class="card"><h3>Ombre Leather</h3></a>
-<a href="OmniaAmathiste.html" class="card"><h3>Omnia Amathiste</h3></a>
-<a href="OmniaCoralBvlgari.html" class="card"><h3>Omnia Coral</h3></a>
-<a href="OneMillionPacoRabanne.html" class="card"><h3>One Million</h3></a>
-<a href="OrienticaAmberRouge(unisex).html" class="card"><h3>Orientica Amber Rouge</h3></a>
-<a href="PhantomPacoRabanne.html" class="card"><h3>Phantom</h3></a>
-<a href="PradaLunaRossa.html" class="card"><h3>Prada Luna Rossa</h3></a>
-<a href="RalphLauren.html" class="card"><h3>Ralph Lauren</h3></a>
-<a href="SauvageDior.html" class="card"><h3>Sauvage Dior</h3></a>
-<a href="ScandalMenlJPG.html" class="card"><h3>Scandal Men</h3></a>
-<a href="SiGiorgioArmani.html" class="card"><h3>Si Giorgio Armani</h3></a>
-<a href="SorbettoRossoEscada.html" class="card"><h3>Sorbetto Rosso</h3></a>
-<a href="SplashCoconutVictoria'sSecret.html" class="card"><h3>Splash Coconut</h3></a>
-<a href="StrongerWithYou.html" class="card"><h3>Stronger With You</h3></a>
-<a href="ThankUNextArianaGrande.html" class="card"><h3>Thank U Next</h3></a>
-<a href="TheOneD&G.html" class="card"><h3>The One</h3></a>
-<a href="Toy2Moschino.html" class="card"><h3>Toy 2</h3></a>
-<a href="ValentinoBornInRoma.html" class="card"><h3>Valentino Born In Roma</h3></a>
-<a href="YaraMoiLataffa.html" class="card"><h3>Yara Moi</h3></a>
-<a href="YaraRosadaLataffa.html" class="card"><h3>Yara Rosada</h3></a>
-<a href="YumYumMoschino.html" class="card"><h3>Yum Yum</h3></a>
-<a href="ChancheEauFraicheChanel.html" class="card"><h3>Chance Eau Fraiche</h3></a>
-<a href="ChancheEauTendreChanel.html" class="card"><h3>Chance Eau Tendre</h3></a>
-<a href="AhliKarpos.html" class="card"><h3>Ahli Karpos</h3></a>
-<a href="AlluresSportChanel.html" class="card"><h3>Allure Sport</h3></a>
-<a href="AmberOudGoldAlHaramain.html" class="card"><h3>Amber Oud Gold</h3></a>
-<a href="AquaDubai-unisex.html" class="card"><h3>Aqua Dubai</h3></a>
-<a href="ArtOfUniverse.html" class="card"><h3>Art Of Universe</h3></a>
-<a href="AssadLataffa.html" class="card"><h3>Assad Lataffa</h3></a>
-<a href="AventusCreed.html" class="card"><h3>Aventus Creed</h3></a>
-<a href="BadBoyCH.html" class="card"><h3>Bad Boy</h3></a>
-<a href="BhararaKing.html" class="card"><h3>Bharara King</h3></a>
-<a href="BlueDeChanel.html" class="card"><h3>Blue De Chanel</h3></a>
-<a href="BurberryHer.html" class="card"><h3>Burberry Her</h3></a>
+<a href="perfumes/9PMCH.html" class="card"><h3>9PM</h3></a>
+<a href="perfumes/212NYCCH.html" class="card"><h3>212 NYC</h3></a>
+<a href="perfumes/212VIPBlackCH.html" class="card"><h3>212 VIP Black</h3></a>
+<a href="perfumes/212VIPRoseCH.html" class="card"><h3>212 VIP Rose</h3></a>
+<a href="perfumes/CHMenCH.html" class="card"><h3>CH Men</h3></a>
+<a href="perfumes/CKBe.html" class="card"><h3>CK Be</h3></a>
+<a href="perfumes/ClubDeNuitArmaf.html" class="card"><h3>Club De Nuit</h3></a>
+<a href="perfumes/MontBlancExplorer.html" class="card"><h3>Mont Blanc Explorer</h3></a>
+<a href="perfumes/MontBlancLegend.html" class="card"><h3>Mont Blanc Legend</h3></a>
+<a href="perfumes/NitroRed.html" class="card"><h3>Nitro Red</h3></a>
+<a href="perfumes/OmbreLeatherTomFord.html" class="card"><h3>Ombre Leather</h3></a>
+<a href="perfumes/OneMillionPacoRabanne.html" class="card"><h3>One Million</h3></a>
+<a href="perfumes/StrongerWithYou.html" class="card"><h3>Stronger With You</h3></a>
+<a href="perfumes/ScandalMenlJPG.html" class="card"><h3>Scandal Men</h3></a>
+<a href="perfumes/HugoBossNight.html" class="card"><h3>Hugo Boss Night</h3></a>
+<a href="perfumes/InvictusVictoryPacoRabanne.html" class="card"><h3>Invictus Victory</h3></a>
+<a href="perfumes/SauvageDior.html" class="card"><h3>Sauvage Dior</h3></a>
+<a href="perfumes/SiGiorgioArmani.html" class="card"><h3>Si Giorgio Armani</h3></a>
+<a href="perfumes/PhantomPacoRabanne.html" class="card"><h3>Phantom</h3></a>
+<a href="perfumes/BadBoyCH.html" class="card"><h3>Bad Boy</h3></a>
+<a href="perfumes/BhararaKing.html" class="card"><h3>Bharara King</h3></a>
+<a href="perfumes/LeBeauLeParfumJPG.html" class="card"><h3>Le Beau Le Parfum</h3></a>
+<a href="perfumes/LeMaleElixirJPG.html" class="card"><h3>Le Male Elixir</h3></a>
+<a href="perfumes/LaytonParfumsDeMarly.html" class="card"><h3>Layton</h3></a>
+<a href="perfumes/LacosteNoir.html" class="card"><h3>Lacoste Noir</h3></a>
+<a href="perfumes/LacosteBlanca.html" class="card"><h3>Lacoste Blanca</h3></a>
+</div>
+</section>
+
+<!-- Sección: Mujeres -->
+<section id="mujeres">
+<h2>Perfumes de Mujer</h2>
+<div class="grid">
+<a href="perfumes/MissDior.html" class="card"><h3>Miss Dior</h3></a>
+<a href="perfumes/LaVieEstBelle.html" class="card"><h3>La Vie Est Belle</h3></a>
+<a href="perfumes/DelinaParfumsDeMarly.html" class="card"><h3>Delina</h3></a>
+<a href="perfumes/DevotionD&G.html" class="card"><h3>Devotion D&G</h3></a>
+<a href="perfumes/J'adoreDior.html" class="card"><h3>J'adore Dior</h3></a>
+<a href="perfumes/JoyDior.html" class="card"><h3>Joy Dior</h3></a>
+<a href="perfumes/LightBlueDG.html" class="card"><h3>Light Blue D&G</h3></a>
+<a href="perfumes/Meow.html" class="card"><h3>Meow</h3></a>
+<a href="perfumes/NinaNinaRicci.html" class="card"><h3>Nina Nina Ricci</h3></a>
+<a href="perfumes/RalphLauren.html" class="card"><h3>Ralph Lauren</h3></a>
+<a href="perfumes/PradaLunaRossa.html" class="card"><h3>Prada Luna Rossa</h3></a>
+<a href="perfumes/SplashCoconutVictoriaSecret.html" class="card"><h3>Splash Coconut</h3></a>
+<a href="perfumes/TheOneDG.html" class="card"><h3>The One D&G</h3></a>
+<a href="perfumes/ThankUNextArianaGrande.html" class="card"><h3>Thank U Next</h3></a>
+<a href="perfumes/YaraRosadaLataffa.html" class="card"><h3>Yara Rosada</h3></a>
+<a href="perfumes/YaraMoiLataffa.html" class="card"><h3>Yara Moi</h3></a>
+<a href="perfumes/YumYumMoschino.html" class="card"><h3>Yum Yum</h3></a>
+<a href="perfumes/GoldFreshMoschino.html" class="card"><h3>Gold Fresh</h3></a>
+<a href="perfumes/GoodGirlCH.html" class="card"><h3>Good Girl</h3></a>
+<a href="perfumes/FameRabanne.html" class="card"><h3>Fame</h3></a>
+<a href="perfumes/DubayChicolat.html" class="card"><h3>Dubay Chocolat</h3></a>
+<a href="perfumes/OlympeaPacoRabanne.html" class="card"><h3>Olympea</h3></a>
+<a href="perfumes/OmniaAmathiste.html" class="card"><h3>Omnia Amathiste</h3></a>
+<a href="perfumes/OmniaCoralBvlgari.html" class="card"><h3>Omnia Coral</h3></a>
+<a href="perfumes/OdysseyCandeeArmaf.html" class="card"><h3>Odyssey Candee</h3></a>
+<a href="perfumes/DelinaParfumsDeMarly.html" class="card"><h3>Delina</h3></a>
+<a href="perfumes/EclairEclear.html" class="card"><h3>Eclair</h3></a>
+</div>
+</section>
+
+<!-- Sección: Unisex -->
+<section id="unisex">
+<h2>Perfumes Unisex</h2>
+<div class="grid">
+<a href="perfumes/GodOfFire-unisex.html" class="card"><h3>God Of Fire</h3></a>
+<a href="perfumes/OrienticaAmberRouge-unisex.html" class="card"><h3>Orientica Amber Rouge</h3></a>
+<a href="perfumes/AquaDubai-unisex.html" class="card"><h3>Aqua Dubai</h3></a>
+<a href="perfumes/ArtOfUniverse.html" class="card"><h3>Art Of Universe</h3></a>
 </div>
 </section>
 
 <footer>&copy; 2025 Tienda de Perfumes</footer>
 
 <script>
-// Array de todos los 76 perfumes
 const perfumes = [
-"9PMCH.html","212NYCCH.html","212VIPBlackCH.html","212VIPRoseCH.html","AcquaDiGioGiorgioArmani.html",
-"CHMenCH.html","CKBe.html","CloudArianaGrande.html","ClubDeNuitArmaf.html","DelinaParfumsDeMarly.html",
-"DevotionD&G.html","DubayChicolat.html","EclairEclear.html","EuphoriaCK.html","FameRabanne.html",
-"GodOfFire(unisex).html","GoldFreshMoschino.html","GoodGirlCH.html","HugoBossNight.html",
-"InvictusVictoryPacoRabanne.html","J'adoreDior.html","JoyDior.html","KhamrahAlHaramain.html",
-"LaVieEstBelle.html","LacosteBlanca.html","LacosteNoir.html","LatafgaEclaire.html",
-"LaytonParfumsDeMarly.html","LeBeauLeParfumJPG.html","LeMaleElixirJPG.html","LightBlue D&G.html",
-"Meow.html","MissDior.html","MontBlancExplorer.html","MontBlancLegend.html","NinaNinaRicci.html",
-"NitroRed.html","NobleBlushLataffa.html","OdisseyChocolatDubay.html","OdysseyCandeeArmaf.html",
-"OdysseyMandarin.html","OlympeaPacoRabanne.html","OmbreLeatherTomFord.html","OmniaAmathiste.html",
-"OmniaCoralBvlgari.html","OneMillionPacoRabanne.html","OrienticaAmberRouge(unisex).html",
-"PhantomPacoRabanne.html","PradaLunaRossa.html","RalphLauren.html","SauvageDior.html",
-"ScandalMenlJPG.html","SiGiorgioArmani.html","SorbettoRossoEscada.html",
-"SplashCoconutVictoria'sSecret.html","StrongerWithYou.html","ThankUNextArianaGrande.html",
-"TheOneD&G.html","Toy2Moschino.html","ValentinoBornInRoma.html","YaraMoiLataffa.html",
-"YaraRosadaLataffa.html","YumYumMoschino.html","ChancheEauFraicheChanel.html",
-"ChancheEauTendreChanel.html","AhliKarpos.html","AlluresSportChanel.html",
-"AmberOudGoldAlHaramain.html","AquaDubai-unisex.html","ArtOfUniverse.html","AssadLataffa.html",
-"AventusCreed.html","BadBoyCH.html","BhararaKing.html","BlueDeChanel.html","BurberryHer.html"
+"perfumes/9PMCH.html","perfumes/212NYCCH.html","perfumes/212VIPBlackCH.html","perfumes/212VIPRoseCH.html",
+"perfumes/CHMenCH.html","perfumes/CKBe.html","perfumes/CloudArianaGrande.html","perfumes/ClubDeNuitArmaf.html",
+"perfumes/DelinaParfumsDeMarly.html","perfumes/DevotionD&G.html","perfumes/DubayChicolat.html","perfumes/EclairEclear.html",
+"perfumes/EuphoriaCK.html","perfumes/FameRabanne.html","perfumes/GodOfFire-unisex.html","perfumes/GoldFreshMoschino.html",
+"perfumes/GoodGirlCH.html","perfumes/HugoBossNight.html","perfumes/InvictusVictoryPacoRabanne.html",
+"perfumes/J'adoreDior.html","perfumes/JoyDior.html","perfumes/KhamrahAlHaramain.html","perfumes/LaVieEstBelle.html",
+"perfumes/LacosteBlanca.html","perfumes/LacosteNoir.html","perfumes/LatafgaEclaire.html","perfumes/LaytonParfumsDeMarly.html",
+"perfumes/LeBeauLeParfumJPG.html","perfumes/LeMaleElixirJPG.html","perfumes/LightBlueDG.html","perfumes/Meow.html",
+"perfumes/MissDior.html","perfumes/MontBlancExplorer.html","perfumes/MontBlancLegend.html","perfumes/NinaNinaRicci.html",
+"perfumes/NitroRed.html","perfumes/NobleBlushLataffa.html","perfumes/OdisseyChocolatDubay.html","perfumes/OdysseyCandeeArmaf.html",
+"perfumes/OdysseyMandarin.html","perfumes/OlympeaPacoRabanne.html","perfumes/OmbreLeatherTomFord.html","perfumes/OmniaAmathiste.html",
+"perfumes/OmniaCoralBvlgari.html","perfumes/OneMillionPacoRabanne.html","perfumes/OrienticaAmberRouge-unisex.html",
+"perfumes/PhantomPacoRabanne.html","perfumes/PradaLunaRossa.html","perfumes/RalphLauren.html","perfumes/SauvageDior.html",
+"perfumes/ScandalMenlJPG.html","perfumes/SiGiorgioArmani.html","perfumes/SorbettoRossoEscada.html",
+"perfumes/SplashCoconutVictoriaSecret.html","perfumes/StrongerWithYou.html","perfumes/ThankUNextArianaGrande.html",
+"perfumes/TheOneDG.html","perfumes/Toy2Moschino.html","perfumes/ValentinoBornInRoma.html","perfumes/YaraMoiLataffa.html",
+"perfumes/YaraRosadaLataffa.html","perfumes/YumYumMoschino.html","perfumes/ChancheEauFraicheChanel.html",
+"perfumes/ChancheEauTendreChanel.html","perfumes/AhliKarpos.html","perfumes/AlluresSportChanel.html",
+"perfumes/AmberOudGoldAlHaramain.html","perfumes/AquaDubai-unisex.html","perfumes/ArtOfUniverse.html",
+"perfumes/AssadLataffa.html","perfumes/AventusCreed.html","perfumes/BadBoyCH.html","perfumes/BhararaKing.html",
+"perfumes/BlueDeChanel.html","perfumes/BurberryHer.html"
 ];
 
-// Buscador tipo Google
 function buscarPerfume(){
   const q = document.getElementById("search-input").value.toLowerCase().trim();
   const resultsContainer = document.getElementById("search-results");
   resultsContainer.innerHTML = "";
   if(!q) return;
-  let encontrados = perfumes.filter(p=>p.toLowerCase().includes(q));
+  let encontrados = perfumes.filter(p => p.toLowerCase().includes(q));
   if(encontrados.length>0){
     encontrados.forEach(p=>{
       let link = document.createElement("a");
-      let nombre = p.replace(".html","").replace(/([A-Z])/g," $1").trim();
+      let nombre = p.split("/").pop().replace(".html","").replace(/([A-Z])/g," $1").trim();
       link.href = p;
       link.textContent = nombre;
       resultsContainer.appendChild(link);
