@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - Tienda de Perfumes</title>
+<style>
+body { font-family:'Arial', sans-serif; background:#f4f4f4; margin:0; padding:0;}
+header { background:#2a2a2a; color:white; padding:20px; text-align:center;}
+h1 { margin:0; }
+.container { max-width:900px; margin:20px auto; padding:20px; background:white; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+h2 { color:#333; }
+.cartItem { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; }
+.total { text-align:right; font-size:20px; margin-top:10px; }
+form { display:flex; flex-direction:column; gap:15px; margin-top:20px; }
+input, select, textarea { padding:10px; font-size:16px; border-radius:10px; border:1px solid #ccc; width:100%; }
+button { background:#ff5c5c; color:white; border:none; padding:15px; font-size:18px; border-radius:10px; cursor:pointer; transition:0.3s; }
+button:hover { background:#ff1c1c; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init(SQKsCmJXsapDGOtPf3mb0); // Pega aquí tu User ID de EmailJS
+})();
+</script>
+</head>
+<body>
+
+<header>
+<h1>Checkout - Tienda de Perfumes</h1>
+</header>
+
+<div class="container">
+  <h2>Carrito</h2>
+  <div id="cartList"></div>
+  <div class="total" id="totalPrice">Total: 0 COP</div>
+
+  <h2>Datos de Envío</h2>
+  <form id="checkoutForm">
+    <input type="text" name="cliente" placeholder="Nombre completo" required>
+    <input type="tel" name="telefono" placeholder="Teléfono" required>
+    <textarea name="direccion" placeholder="Dirección de entrega" required></textarea>
+    <select name="metodo" required>
+      <option value="">Selecciona método de pago</option>
+      <option value="Nequi">Nequi</option>
+      <option value="Transferencia">Transferencia</option>
+      <option value="Efectivo">Efectivo</option>
+    </select>
+    <button type="submit">Finalizar Compra</button>
+  </form>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cartList = document.getElementById('cartList');
+let totalPrice = document.getElementById('totalPrice');
+
+function renderCart() {
+  cartList.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price;
+    cartList.innerHTML += `
+      <div class="cartItem">
+        <span>${item.name}</span>
+        <span>${item.price.toLocaleString()} COP</span>
+      </div>
+    `;
+  });
+  totalPrice.innerText = "Total: " + total.toLocaleString() + " COP";
+}
+
+renderCart();
+
+// Manejar formulario
+document.getElementById('checkoutForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  if(cart.length === 0) { alert("El carrito está vacío"); return; }
+
+  let formData = new FormData(this);
+  let data = {
+    cliente: formData.get('cliente'),
+    telefono: formData.get('telefono'),
+    direccion: formData.get('direccion'),
+    metodo: formData.get('metodo'),
+    pedido: cart.map(p => p.name + " - " + p.price.toLocaleString() + " COP").join(", "),
+    total: totalPrice.innerText
+  };
+
+  emailjs.send('service_4zsh227', 'template_9pw5f7b', data)
+  .then(function(response){
+      alert("Pedido enviado correctamente. Nos contactaremos contigo pronto.");
+      localStorage.removeItem('cart');
+      window.location.href = "../index.html";
+  }, function(error){
+      alert("Error al enviar el pedido, intenta nuevamente.");
+      console.log(error);
+  });
+});
+</script>
+
+</body>
+</html>
