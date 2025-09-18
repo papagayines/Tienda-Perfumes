@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tienda de Perfumes</title>
+<title>Tienda de Perfumes Premium</title>
 <style>
 body { font-family:'Poppins', sans-serif; margin:0; background:#f5f5f5; color:#333; }
 header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
@@ -23,15 +23,16 @@ button { margin-top:5px; padding:5px 10px; border:none; border-radius:5px; backg
 </style>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-(function(){emailjs.init("TU_USER_ID_EMAILJS");})();
+(function(){emailjs.init("user_4zsh227");})();
 
+// Lista de perfumes con precios de sus carpetas (ejemplo, debes completar los 76)
 let perfumes = [
   {name:"Sauvage", price:120, gender:"Hombre", category:"Amaderado"},
   {name:"212 VIP", price:150, gender:"Hombre", category:"Dulce"},
   {name:"Miss Dior", price:130, gender:"Mujer", category:"Floral"},
   {name:"Good Girl", price:140, gender:"Mujer", category:"Dulce"},
   {name:"God Of Fire", price:160, gender:"Unisex", category:"Oriental"},
-  // Agregar los 76 perfumes aquí con la misma estructura
+  // Completar los 76 perfumes aquí
 ];
 
 let filteredPerfumes = [...perfumes];
@@ -43,7 +44,7 @@ function renderPerfumes(){
   filteredPerfumes.forEach(p=>{
     const div=document.createElement('div');
     div.className='card';
-    div.innerHTML=`<h3>${p.name}</h3><p>$${p.price}</p>
+    div.innerHTML=`<h3>${p.name}</h3>
     <p>${p.gender} - ${p.category}</p>
     <button onclick="addToCart('${p.name}',${p.price})">Agregar al carrito</button>`;
     grid.appendChild(div);
@@ -82,9 +83,10 @@ function submitOrder(){
   const address=document.getElementById('customer-address').value;
   const payment=document.getElementById('payment-method').value;
   if(!name||!phone||!address||!payment){ alert('Por favor completa todos los campos'); return; }
+
   let message='Pedido:\n';
   cart.forEach(item=>{ message+=`${item.name} - $${item.price}\n`; });
-  message+=`Total: $${cart.reduce((a,b)=>a+b.price,0).toFixed(2)}\nNombre: ${name}\nTel: ${phone}\nDirección: ${address}\nPago: ${payment}`;
+  message+=`Total: $${cart.reduce((a,b)=>a+b.price,0).toFixed(2)}\nNombre: ${name}\nTel: ${phone}\nDirección: ${address}\nPago: ${payment}\nNúmero para transferencias: +57 3115180995`;
 
   emailjs.send("service_4zsh227","template_9pw5f7b",{message})
       .then(()=>{alert('Pedido enviado correctamente'); cart=[]; renderCart(); document.getElementById('checkout').reset();});
@@ -105,14 +107,14 @@ window.onload = renderPerfumes;
 <body>
 
 <header>
-<h1>Tienda de Perfumes</h1>
+<h1>Tienda de Perfumes Premium</h1>
 <input type="text" id="search-bar" placeholder="Buscar perfume, género o categoría..." oninput="searchPerfume()">
 </header>
 
 <section id="perfumes">
 <h2>Perfumes</h2>
 <div class="grid" id="perfume-grid">
-<!-- Se llenará automáticamente con JS -->
+<!-- Se llena automáticamente con JS -->
 </div>
 </section>
 
@@ -134,6 +136,8 @@ window.onload = renderPerfumes;
 <option value="Tranfiya">Tranfiya</option>
 <option value="Efectivo">Efectivo</option>
 </select>
+<p>Para Nequi/Tranfiya transfiere al número: +57 3115180995 y escribe tu nombre en el comentario.</p>
+<p>Para efectivo, se coordina la entrega.</p>
 <button onclick="submitOrder()">Enviar Pedido</button>
 </div>
 
