@@ -3,223 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfume</title>
+<title>Nombre del Perfume</title>
 <style>
-body { font-family:'Poppins', sans-serif; margin:0; background:#f5f5f5; color:#333; }
-header { background:#6b5b95; color:#fff; padding:20px; text-align:center; position:sticky; top:0; z-index:100; }
-header h1 { margin:0; }
-main { max-width:900px; margin:20px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
-img { max-width:100%; border-radius:12px; }
-h2 { color:#563d7c; margin-top:20px; }
-label { display:block; margin-top:10px; }
-select, input[type="number"], input, textarea { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
-button { background:#6b5b95; color:#fff; border:none; padding:10px 15px; margin-top:10px; border-radius:5px; cursor:pointer; transition:0.3s; }
-button:hover { background:#563d7c; }
-#cart { position:fixed; top:20px; right:20px; background:#fff; border-radius:10px; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); max-width:300px; display:none; }
-#cart h3 { margin:0; }
-.cart-item { display:flex; justify-content:space-between; margin-top:10px; }
-.cart-item span { margin-left:5px; }
-footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
+body { font-family:'Arial', sans-serif; background:#f4f4f4; margin:0; padding:0;}
+header { background:#2a2a2a; color:white; padding:20px; text-align:center;}
+h1 { margin:0; }
+.container { display:flex; flex-wrap:wrap; justify-content:center; padding:20px; gap:40px; }
+.image { flex:1 1 300px; max-width:400px; }
+.image img { width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.2); }
+.details { flex:1 1 300px; max-width:400px; background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+.details h2 { margin-top:0; }
+.priceSelect { margin:15px 0; }
+.priceSelect select { padding:10px; border-radius:10px; border:1px solid #ccc; font-size:16px; width:100%; }
+button { background:#ff5c5c; color:white; border:none; padding:15px; width:100%; font-size:18px; border-radius:10px; cursor:pointer; margin-top:10px; transition:0.3s; }
+button:hover { background:#ff1c1c; }
+#cartCount { font-weight:bold; color:#ff1c1c; }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-(function(){emailjs.init("user_XXXXXXXXXXXXXXXX");})();
-</script>
 </head>
 <body>
+
 <header>
-<h1>Perfume</h1>
-<button onclick="toggleCart()">Carrito 🛒</button>
+<h1>Nombre del Perfume</h1>
+<p>Carrito: <span id="cartCount">0</span> productos</p>
 </header>
 
-<main>
-<img id="perfumeImg" src="" alt="Perfume">
-<h2 id="perfumeName"></h2>
-<p id="perfumeDesc"></p>
+<div class="container">
+  <div class="image">
+    <img src="../img/NombreDelPerfume.jpg" alt="Nombre del Perfume">
+  </div>
+  <div class="details">
+    <h2>Descripción</h2>
+    <p>Este perfume es ideal para días calurosos o actividades físicas intensas. Fresco, elegante y duradero.</p>
 
-<label>Selecciona Mililitros y Precio:</label>
-<select id="sizeSelect">
-  <option value="30000">30 ml - 33.000 COP</option>
-  <option value="45000">50 ml - 45.000 COP</option>
-  <option value="90000">110 ml - 90.000 COP</option>
-</select>
-<button onclick="addToCart()">Añadir al carrito</button>
+    <div class="priceSelect">
+      <label for="sizeSelect">Selecciona mililitraje:</label>
+      <select id="sizeSelect">
+        <option value="33000">30 ml - 33.000 COP</option>
+        <option value="45000">50 ml - 45.000 COP</option>
+        <option value="90000">110 ml - 90.000 COP</option>
+      </select>
+    </div>
 
-<h2>Finalizar Compra</h2>
-<label>Nombre completo:</label>
-<input type="text" id="custName">
-<label>Teléfono / WhatsApp:</label>
-<input type="text" id="custPhone">
-<label>Dirección:</label>
-<textarea id="custAddress"></textarea>
-<label>Método de pago:</label>
-<select id="payMethod">
-  <option value="Nequi">Nequi</option>
-  <option value="Transferencia">Transferencia</option>
-  <option value="Efectivo">Efectivo</option>
-</select>
-<button onclick="checkout()">Enviar Pedido</button>
-</main>
-
-<div id="cart">
-<h3>Carrito</h3>
-<div id="cartItems"></div>
-<p>Total: <span id="cartTotal">0</span> COP</p>
+    <button onclick="addToCart()">Añadir al carrito</button>
+    <button onclick="goToCheckout()">Ir al pago</button>
+  </div>
 </div>
 
-<footer>&copy; 2025 Tienda de Perfumes</footer>
-
 <script>
-// Datos de perfumes: imagen y descripción
-const perfumesInfo = {
-"AcquaDiGioGiorgioArmani":{img:"img/acqua-di-gio.jpg",desc:"Perfume fresco, ideal para días calurosos o actividad física."},
-"SauvageDior":{img:"img/sauvage.jpg",desc:"Aroma intenso, perfecto para cualquier ocasión."},
-// …aquí incluir los 76 perfumes con su imagen y descripción
-};const perfumesInfo = {
-"9PMCH": {img:"img/9pmch.jpg", desc:"Aroma nocturno, ideal para salir de noche."},
-"212NYCCH": {img:"img/212nycch.jpg", desc:"Fresco y urbano, perfecto para la ciudad."},
-"212VIPBlackCH": {img:"img/212vipblackch.jpg", desc:"Elegante y moderno, destacas en cualquier evento."},
-"212VIPRoseCH": {img:"img/212viprosech.jpg", desc:"Dulce y sofisticado, femenino y chic."},
-"AcquaDiGioGiorgioArmani": {img:"img/acqua-di-gio.jpg", desc:"Muy fresco, excelente para días calurosos o actividad física."},
-"AhliKarpos": {img:"img/ahlikarpos.jpg", desc:"Exótico y duradero, ideal para momentos especiales."},
-"AlluresSportChanel": {img:"img/alluressportchanel.jpg", desc:"Refrescante y deportivo, para personas activas."},
-"AmberOudGoldAlHaramain": {img:"img/amberoudgoldalharamain.jpg", desc:"Cálido y lujoso, perfecto para la noche."},
-"AquaDubai(unisex)": {img:"img/aquadubai.jpg", desc:"Unisex, fresco y elegante, ideal para cualquier ocasión."},
-"ArtOfUniverse": {img:"img/artofuniverse.jpg", desc:"Versátil y moderno, aroma distintivo."},
-"AssadLataffa": {img:"img/assadlataffa.jpg", desc:"Potente y exótico, deja una impresión duradera."},
-"AventusCreed": {img:"img/aventuscreed.jpg", desc:"Fuerte y masculino, sofisticado y elegante."},
-"BadBoyCH": {img:"img/badboych.jpg", desc:"Intenso y rebelde, para destacar tu personalidad."},
-"BhararaKing": {img:"img/bhararaking.jpg", desc:"Elegante y sofisticado, aroma distinguido."},
-"BlueDeChanel": {img:"img/bluedechanel.jpg", desc:"Clásico, fresco y atemporal, perfecto para el día a día."},
-"BurberryHer": {img:"img/burberryher.jpg", desc:"Dulce y femenino, aroma moderno y seductor."},
-"CHMenCH": {img:"img/chmench.jpg", desc:"Elegante y clásico, masculino y duradero."},
-"CKBe": {img:"img/ckbe.jpg", desc:"Unisex, fresco y limpio, ideal para cualquier ocasión."},
-"CloudArianaGrande": {img:"img/cloudarianagrande.jpg", desc:"Dulce y suave, aroma juvenil y delicado."},
-"ClubDeNuitArmaf": {img:"img/clubdenuitarmaf.jpg", desc:"Intenso y seductor, aroma para la noche."},
-"DelinaParfumsDeMarly": {img:"img/delinaparfumsdemarly.jpg", desc:"Femenino y elegante, sofisticado y duradero."},
-"DevotionD&G": {img:"img/devotiondg.jpg", desc:"Aromático y dulce, ideal para cualquier día especial."},
-"DubayChicolat": {img:"img/dubaychicolat.jpg", desc:"Dulce y delicioso, aroma que cautiva."},
-"EclairEclear": {img:"img/eclaireclear.jpg", desc:"Fresco y ligero, para todos los días."},
-"EuphoriaCK": {img:"img/euphoriack.jpg", desc:"Seductor y misterioso, perfecto para la noche."},
-"FameRabanne": {img:"img/famerabanne.jpg", desc:"Elegante y moderno, destaca tu personalidad."},
-"GodOfFire(unisex)": {img:"img/godoffire.jpg", desc:"Unisex, potente y exótico, aroma que dura todo el día."},
-"GoldFreshMoschino": {img:"img/goldfreshmoschino.jpg", desc:"Dulce y vibrante, para resaltar tu estilo."},
-"GoodGirlCH": {img:"img/goodgirlch.jpg", desc:"Femenino y audaz, con un toque de misterio."},
-"HugoBossNight": {img:"img/hugobossnight.jpg", desc:"Elegante y nocturno, aroma intenso para destacar."},
-"InvictusVictoryPacoRabanne": {img:"img/invictusvictory.jpg", desc:"Fresco y poderoso, ideal para hombres activos."},
-"J'adoreDior": {img:"img/jadoredior.jpg", desc:"Clásico y femenino, aroma sofisticado y duradero."},
-"JoyDior": {img:"img/joydior.jpg", desc:"Fresco, dulce y elegante, perfecto para el día."},
-"KhamrahAlHaramain": {img:"img/khamrah.jpg", desc:"Cálido y lujoso, aroma que dura todo el día."},
-"LaVieEstBelle": {img:"img/lavieestbelle.jpg", desc:"Dulce y encantador, ideal para ocasiones especiales."},
-"LacosteBlanca": {img:"img/lacosteblanca.jpg", desc:"Fresco y limpio, aroma diario y juvenil."},
-"LacosteNoir": {img:"img/lacostenoir.jpg", desc:"Elegante y oscuro, para la noche y eventos formales."},
-"LatafgaEclaire": {img:"img/latafgaeclaire.jpg", desc:"Suave y delicado, aroma femenino y encantador."},
-"LaytonParfumsDeMarly": {img:"img/laytonparfumsdemarly.jpg", desc:"Potente y elegante, aroma masculino sofisticado."},
-"LeBeauLeParfumJPG": {img:"img/lebeauleparfum.jpg", desc:"Dulce y moderno, aroma que destaca."},
-"LeMaleElixirJPG": {img:"img/lemaleelixir.jpg", desc:"Masculino, intenso y duradero."},
-"LightBlueDG": {img:"img/lightbluedg.jpg", desc:"Fresco y afrutado, ideal para verano."},
-"Meow": {img:"img/meow.jpg", desc:"Dulce y suave, para un aroma diario."},
-"MissDior": {img:"img/missdior.jpg", desc:"Femenino y elegante, aroma delicado y duradero."},
-"MontBlancExplorer": {img:"img/montblancexplorer.jpg", desc:"Fresco y aventurero, aroma masculino versátil."},
-"MontBlancLegend": {img:"img/montblanclegend.jpg", desc:"Elegante y clásico, para todos los días."},
-"NinaNinaRicci": {img:"img/ninaninaricci.jpg", desc:"Dulce y floral, aroma femenino y juvenil."},
-"NitroRed": {img:"img/nitrored.jpg", desc:"Intenso y masculino, perfecto para destacar."},
-"NobleBlushLataffa": {img:"img/nobleblushlataffa.jpg", desc:"Fresco y elegante, aroma femenino duradero."},
-"OdisseyChocolatDubay": {img:"img/odisseychocolatdubay.jpg", desc:"Dulce y delicioso, aroma que cautiva."},
-"OdysseyCandeeArmaf": {img:"img/odysseycandeearmaf.jpg", desc:"Dulce y juvenil, aroma encantador."},
-"OdysseyMandarin": {img:"img/odysseymandarin.jpg", desc:"Cítrico y fresco, perfecto para el día."},
-"OlympeaPacoRabanne": {img:"img/olympeapacorabanne.jpg", desc:"Dulce y sofisticado, aroma femenino duradero."},
-"OmbreLeatherTomFord": {img:"img/ombreleathertomford.jpg", desc:"Intenso y elegante, ideal para la noche."},
-"OmniaAmathiste": {img:"img/omniaamathiste.jpg", desc:"Floral y fresco, aroma encantador y femenino."},
-"OmniaCoralBvlgari": {img:"img/omniacoralbvlgari.jpg", desc:"Dulce y fresco, aroma juvenil y alegre."},
-"OneMillionPacoRabanne": {img:"img/onemillion.jpg", desc:"Intenso y lujoso, aroma masculino destacado."},
-"OrienticaAmberRouge(unisex)": {img:"img/orienticaamberrouge.jpg", desc:"Unisex, cálido y seductor."},
-"PhantomPacoRabanne": {img:"img/phantompacorabanne.jpg", desc:"Fresco y moderno, aroma masculino juvenil."},
-"PradaLunaRossa": {img:"img/pradalunarossa.jpg", desc:"Fresco y deportivo, aroma masculino versátil."},
-"RalphLauren": {img:"img/ralphlauren.jpg", desc:"Clásico y elegante, aroma que dura todo el día."},
-"SauvageDior": {img:"img/sauvage.jpg", desc:"Intenso y masculino, perfecto para cualquier ocasión."},
-"ScandalMenlJPG": {img:"img/scandalmen.jpg", desc:"Intenso y atrevido, aroma masculino potente."},
-"SiGiorgioArmani": {img:"img/sigiorgioarmani.jpg", desc:"Femenino y elegante, aroma sofisticado."},
-"SorbettoRossoEscada": {img:"img/sorbettorosso.jpg", desc:"Dulce y afrutado, aroma femenino alegre."},
-"SplashCoconutVictoriasSecret": {img:"img/splashcoconut.jpg", desc:"Dulce y tropical, aroma fresco y juvenil."},
-"StrongerWithYou": {img:"img/strongerwithyou.jpg", desc:"Masculino y moderno, aroma intenso y duradero."},
-"ThankUNextArianaGrande": {img:"img/thankunextarianagrande.jpg", desc:"Dulce y juvenil, aroma femenino encantador."},
-"TheOneD&G": {img:"img/theonedg.jpg", desc:"Intenso y elegante, aroma masculino clásico."},
-"Toy2Moschino": {img:"img/toy2moschino.jpg", desc:"Dulce y moderno, aroma femenino divertido."},
-"ValentinoBornInRoma": {img:"img/valentinoborninroma.jpg", desc:"Elegante y moderno, aroma femenino sofisticado."},
-"YaraMoiLataffa": {img:"img/yaramoi.jpg", desc:"Dulce y fresco, aroma encantador y femenino."},
-"YaraRosadaLataffa": {img:"img/yararosada.jpg", desc:"Dulce y juvenil, aroma femenino alegre."},
-"YumYumMoschino": {img:"img/yumyummoschino.jpg", desc:"Dulce y vibrante, aroma femenino moderno."},
-"ChancheEauFraicheChanel": {img:"img/chancheeaufraichechanel.jpg", desc:"Fresco y elegante, aroma femenino clásico."},
-"ChancheEauTendreChanel": {img:"img/chancheeautendrechanel.jpg", desc:"Suave y delicado, aroma femenino encantador."}
-};
-
-
-// Carrito
+// Carrito simple
 let cart = [];
+let cartCount = document.getElementById('cartCount');
 
-// Obtener perfume desde query string
-const params = new URLSearchParams(window.location.search);
-const perfumeName = params.get('name');
-const info = perfumesInfo[perfumeName];
-
-if(info){
-  document.getElementById('perfumeName').innerText = perfumeName.replace(/([A-Z])/g,' $1').trim();
-  document.getElementById('perfumeDesc').innerText = info.desc;
-  document.getElementById('perfumeImg').src = info.img;
+function addToCart() {
+  const select = document.getElementById('sizeSelect');
+  const price = parseInt(select.value);
+  const perfumeName = document.querySelector('header h1').innerText;
+  
+  cart.push({name: perfumeName, price: price});
+  cartCount.innerText = cart.length;
+  alert(perfumeName + " agregado al carrito");
 }
 
-// Funciones del carrito
-function toggleCart(){
-  const c = document.getElementById('cart');
-  c.style.display = c.style.display === 'none' ? 'block' : 'none';
-}
-
-function addToCart(){
-  const sizeSelect = document.getElementById('sizeSelect');
-  const price = parseInt(sizeSelect.value);
-  cart.push({name:perfumeName,size:sizeSelect.options[sizeSelect.selectedIndex].text,price:price});
-  updateCart();
-}
-
-function updateCart(){
-  const cartDiv = document.getElementById('cartItems');
-  cartDiv.innerHTML = "";
-  let total = 0;
-  cart.forEach((item,index)=>{
-    total+=item.price;
-    const div = document.createElement('div');
-    div.className="cart-item";
-    div.innerHTML=`<span>${item.name} (${item.size})</span><span>${item.price} COP <button onclick="removeItem(${index})">❌</button></span>`;
-    cartDiv.appendChild(div);
-  });
-  document.getElementById('cartTotal').innerText = total;
-}
-
-function removeItem(index){
-  cart.splice(index,1);
-  updateCart();
-}
-
-// Checkout con EmailJS
-function checkout(){
-  const name = document.getElementById('custName').value;
-  const phone = document.getElementById('custPhone').value;
-  const address = document.getElementById('custAddress').value;
-  const method = document.getElementById('payMethod').value;
-  if(cart.length===0){ alert("El carrito está vacío"); return; }
-  if(!name || !phone || !address){ alert("Completa tus datos"); return; }
-
-  let message = `Pedido de ${name}\nTel: ${phone}\nDirección: ${address}\nPago: ${method}\n\nItems:\n`;
-  cart.forEach(item=>{
-    message+=`${item.name} (${item.size}) - ${item.price} COP\n`;
-  });
-
-  emailjs.send("service_4zsh227","template_9pw5f7b",{message:message})
-  .then(response=>{ alert("Pedido enviado exitosamente!"); cart=[]; updateCart(); })
-  .catch(err=>{ alert("Error al enviar pedido"); console.log(err); });
+function goToCheckout() {
+  if(cart.length === 0) { alert("Agrega al menos un perfume al carrito"); return; }
+  
+  // Redirigir a página de pago
+  localStorage.setItem('cart', JSON.stringify(cart)); // Guardamos carrito
+  window.location.href = '../checkout.html';
 }
 </script>
+
 </body>
 </html>
-
