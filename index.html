@@ -10,154 +10,132 @@ header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
 header h1 { margin:0; }
 section { padding:40px 20px; max-width:1200px; margin:0 auto; }
 h2 { color:#563d7c; margin-bottom:20px; }
-h4 { margin:5px 0; color:#8052a4; font-size:0.95em; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
-.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; text-decoration:none; color:#333; }
+.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; }
 .card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
 .card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
-.card span { display:block; font-size:0.8em; color:#555; }
-footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
-#searchContainer { text-align:center; margin-bottom:30px; }
-#searchInput { padding:10px; width:80%; max-width:400px; border-radius:8px; border:1px solid #ccc; font-size:16px; }
-#searchResults { margin-top:20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+button { margin-top:5px; padding:5px 10px; border:none; border-radius:5px; background:#6b5b95; color:#fff; cursor:pointer; }
+#cart { position:fixed; bottom:0; right:0; background:#6b5b95; color:#fff; padding:15px; border-radius:12px 0 0 0; max-width:300px; z-index:100; }
+#cart ul { list-style:none; padding:0; max-height:300px; overflow-y:auto; }
+#checkout { display:none; padding:20px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); margin-top:20px; }
+#checkout input, #checkout select { display:block; width:100%; margin-bottom:10px; padding:8px; border-radius:5px; border:1px solid #ccc; }
+#search-bar { margin-bottom:20px; padding:10px; width:100%; max-width:400px; border-radius:5px; border:1px solid #ccc; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){emailjs.init("TU_USER_ID_EMAILJS");})();
+
+let perfumes = [
+  {name:"Sauvage", price:120, gender:"Hombre", category:"Amaderado"},
+  {name:"212 VIP", price:150, gender:"Hombre", category:"Dulce"},
+  {name:"Miss Dior", price:130, gender:"Mujer", category:"Floral"},
+  {name:"Good Girl", price:140, gender:"Mujer", category:"Dulce"},
+  {name:"God Of Fire", price:160, gender:"Unisex", category:"Oriental"},
+  // Agregar los 76 perfumes aquí con la misma estructura
+];
+
+let filteredPerfumes = [...perfumes];
+let cart = [];
+
+function renderPerfumes(){
+  const grid = document.getElementById('perfume-grid');
+  grid.innerHTML = '';
+  filteredPerfumes.forEach(p=>{
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<h3>${p.name}</h3><p>$${p.price}</p>
+    <p>${p.gender} - ${p.category}</p>
+    <button onclick="addToCart('${p.name}',${p.price})">Agregar al carrito</button>`;
+    grid.appendChild(div);
+  });
+}
+
+function addToCart(name, price){
+  cart.push({name, price});
+  renderCart();
+}
+
+function renderCart(){
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML='';
+  let total = 0;
+  cart.forEach((item,index)=>{
+    total+=item.price;
+    const li=document.createElement('li');
+    li.textContent = `${item.name} - $${item.price}`;
+    const remove=document.createElement('button');
+    remove.textContent='X';
+    remove.onclick=()=>{cart.splice(index,1); renderCart();};
+    li.appendChild(remove);
+    cartItems.appendChild(li);
+  });
+  document.getElementById('cart-total').textContent = total.toFixed(2);
+}
+
+function showCheckout(){
+  document.getElementById('checkout').style.display='block';
+}
+
+function submitOrder(){
+  const name=document.getElementById('customer-name').value;
+  const phone=document.getElementById('customer-phone').value;
+  const address=document.getElementById('customer-address').value;
+  const payment=document.getElementById('payment-method').value;
+  if(!name||!phone||!address||!payment){ alert('Por favor completa todos los campos'); return; }
+  let message='Pedido:\n';
+  cart.forEach(item=>{ message+=`${item.name} - $${item.price}\n`; });
+  message+=`Total: $${cart.reduce((a,b)=>a+b.price,0).toFixed(2)}\nNombre: ${name}\nTel: ${phone}\nDirección: ${address}\nPago: ${payment}`;
+
+  emailjs.send("service_4zsh227","template_9pw5f7b",{message})
+      .then(()=>{alert('Pedido enviado correctamente'); cart=[]; renderCart(); document.getElementById('checkout').reset();});
+}
+
+function searchPerfume(){
+  const term=document.getElementById('search-bar').value.toLowerCase();
+  filteredPerfumes = perfumes.filter(p=>{
+    return p.name.toLowerCase().includes(term) || 
+           p.gender.toLowerCase().includes(term) || 
+           p.category.toLowerCase().includes(term);
+  });
+  renderPerfumes();
+}
+window.onload = renderPerfumes;
+</script>
 </head>
 <body>
 
 <header>
 <h1>Tienda de Perfumes</h1>
+<input type="text" id="search-bar" placeholder="Buscar perfume, género o categoría..." oninput="searchPerfume()">
 </header>
 
-<!-- Buscador -->
-<section id="buscador">
-<div id="searchContainer">
-<input type="text" id="searchInput" placeholder="Busca tu perfume...">
-<div id="searchResults"></div>
-</div>
-</section>
-
-<!-- PERFUMES -->
 <section id="perfumes">
-
-<!-- Hombre -->
-<h2>Perfumes de Hombre</h2>
-
-<h4>Frescos</h4>
-<div class="grid">
-<a href="perfumes/AcquaDiGioGiorgioArmani.html" class="card"><h3>Acqua Di Gio</h3><span>Hombre - Fresco</span></a>
-<a href="perfumes/SauvageDior.html" class="card"><h3>Sauvage Dior</h3><span>Hombre - Fresco</span></a>
-<a href="perfumes/StrongerWithYou.html" class="card"><h3>Stronger With You</h3><span>Hombre - Fresco</span></a>
+<h2>Perfumes</h2>
+<div class="grid" id="perfume-grid">
+<!-- Se llenará automáticamente con JS -->
 </div>
-
-<h4>Amaderados</h4>
-<div class="grid">
-<a href="perfumes/CHMenCH.html" class="card"><h3>CH Men</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/ClubDeNuitArmaf.html" class="card"><h3>Club De Nuit Armaf</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/LaytonParfumsDeMarly.html" class="card"><h3>Layton Parfums De Marly</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/OmbreLeatherTomFord.html" class="card"><h3>Ombre Leather Tom Ford</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/OneMillionPacoRabanne.html" class="card"><h3>One Million Paco Rabanne</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/MontBlancExplorer.html" class="card"><h3>Mont Blanc Explorer</h3><span>Hombre - Amaderado</span></a>
-<a href="perfumes/MontBlancLegend.html" class="card"><h3>Mont Blanc Legend</h3><span>Hombre - Amaderado</span></a>
-</div>
-
-<h4>Orientales</h4>
-<div class="grid">
-<a href="perfumes/AventusCreed.html" class="card"><h3>Aventus Creed</h3><span>Hombre - Oriental</span></a>
-<a href="perfumes/PhantomPacoRabanne.html" class="card"><h3>Phantom Paco Rabanne</h3><span>Hombre - Oriental</span></a>
-<a href="perfumes/LeBeauLeParfumJPG.html" class="card"><h3>Le Beau Le Parfum</h3><span>Hombre - Oriental</span></a>
-<a href="perfumes/LeMaleElixirJPG.html" class="card"><h3>Le Male Elixir</h3><span>Hombre - Oriental</span></a>
-<a href="perfumes/InvictusVictoryPacoRabanne.html" class="card"><h3>Invictus Victory</h3><span>Hombre - Oriental</span></a>
-</div>
-
-<!-- Mujer -->
-<h2>Perfumes de Mujer</h2>
-
-<h4>Dulces</h4>
-<div class="grid">
-<a href="perfumes/LaVieEstBelle.html" class="card"><h3>La Vie Est Belle</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/MissDior.html" class="card"><h3>Miss Dior</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/GoodGirlCH.html" class="card"><h3>Good Girl</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/JoyDior.html" class="card"><h3>Joy Dior</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/TheOneDG.html" class="card"><h3>The One D&G</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/SplashCoconutVictoriasSecret.html" class="card"><h3>Splash Coconut Victoria's Secret</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/GoldFreshMoschino.html" class="card"><h3>Gold Fresh Moschino</h3><span>Mujer - Dulce</span></a>
-<a href="perfumes/YumYumMoschino.html" class="card"><h3>Yum Yum Moschino</h3><span>Mujer - Dulce</span></a>
-</div>
-
-<h4>Florales</h4>
-<div class="grid">
-<a href="perfumes/ChancheEauFraicheChanel.html" class="card"><h3>Chanche Eau Fraiche Chanel</h3><span>Mujer - Floral</span></a>
-<a href="perfumes/ChancheEauTendreChanel.html" class="card"><h3>Chanche Eau Tendre Chanel</h3><span>Mujer - Floral</span></a>
-<a href="perfumes/DelinaParfumsDeMarly.html" class="card"><h3>Delina Parfums De Marly</h3><span>Mujer - Floral</span></a>
-<a href="perfumes/FameRabanne.html" class="card"><h3>Fame Rabanne</h3><span>Mujer - Floral</span></a>
-<a href="perfumes/OmniaAmathiste.html" class="card"><h3>Omnia Amathiste</h3><span>Mujer - Floral</span></a>
-</div>
-
-<h4>Frescos</h4>
-<div class="grid">
-<a href="perfumes/LightBlueDG.html" class="card"><h3>Light Blue D&G</h3><span>Mujer - Fresco</span></a>
-<a href="perfumes/OmniaCoralBvlgari.html" class="card"><h3>Omnia Coral Bvlgari</h3><span>Mujer - Fresco</span></a>
-<a href="perfumes/RalphLauren.html" class="card"><h3>Ralph Lauren</h3><span>Mujer - Fresco</span></a>
-<a href="perfumes/Meow.html" class="card"><h3>Meow</h3><span>Mujer - Fresco</span></a>
-</div>
-
-<h4>Orientales</h4>
-<div class="grid">
-<a href="perfumes/DevotionD&G.html" class="card"><h3>Devotion D&G</h3><span>Mujer - Oriental</span></a>
-<a href="perfumes/DubayChicolat.html" class="card"><h3>Dubay Chocolat</h3><span>Mujer - Oriental</span></a>
-<a href="perfumes/PradaLunaRossa.html" class="card"><h3>Prada Luna Rossa</h3><span>Mujer - Oriental</span></a>
-<a href="perfumes/JadoreDior.html" class="card"><h3>J'adore Dior</h3><span>Mujer - Oriental</span></a>
-</div>
-
-<!-- Unisex -->
-<h2>Perfumes Unisex</h2>
-
-<h4>Frescos</h4>
-<div class="grid">
-<a href="perfumes/AquaDubai(unisex).html" class="card"><h3>Aqua Dubai</h3><span>Unisex - Fresco</span></a>
-</div>
-
-<h4>Amaderados</h4>
-<div class="grid">
-<a href="perfumes/AssadLataffa.html" class="card"><h3>Assad Lataffa</h3><span>Unisex - Amaderado</span></a>
-<a href="perfumes/ArtOfUniverse.html" class="card"><h3>Art Of Universe</h3><span>Unisex - Amaderado</span></a>
-<a href="perfumes/OrienticaAmberRouge(unisex).html" class="card"><h3>Orientica Amber Rouge</h3><span>Unisex - Amaderado</span></a>
-</div>
-
-<h4>Orientales</h4>
-<div class="grid">
-<a href="perfumes/GodOfFire(unisex).html" class="card"><h3>God Of Fire</h3><span>Unisex - Oriental</span></a>
-</div>
-
 </section>
 
-<footer>&copy; 2025 Tienda de Perfumes</footer>
+<div id="cart">
+<h3>Carrito</h3>
+<ul id="cart-items"></ul>
+<p>Total: $<span id="cart-total">0</span></p>
+<button onclick="showCheckout()">Finalizar Compra</button>
+</div>
 
-<script>
-// Buscador avanzado
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
-const cards = Array.from(document.querySelectorAll('.card'));
-
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-    searchResults.innerHTML = '';
-    if(query === '') return;
-
-    const filtered = cards.filter(c => c.textContent.toLowerCase().includes(query));
-    if(filtered.length === 0){
-        searchResults.innerHTML = '<p>No se encontró ningún perfume</p>';
-    } else {
-        filtered.forEach(c => {
-            const clone = c.cloneNode(true);
-            searchResults.appendChild(clone);
-        });
-    }
-});
-</script>
+<div id="checkout">
+<h3>Finalizar Compra</h3>
+<input type="text" id="customer-name" placeholder="Nombre completo">
+<input type="tel" id="customer-phone" placeholder="Teléfono">
+<input type="text" id="customer-address" placeholder="Dirección">
+<select id="payment-method">
+<option value="">Selecciona método de pago</option>
+<option value="Nequi">Nequi</option>
+<option value="Tranfiya">Tranfiya</option>
+<option value="Efectivo">Efectivo</option>
+</select>
+<button onclick="submitOrder()">Enviar Pedido</button>
+</div>
 
 </body>
 </html>
-
-</html>
-
