@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo - Nova Parfumes</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Nova Parfumes</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>Nova Parfumes</header>
-  <main>
-    <h2>Catálogo de Perfumes</h2>
-    <div class="grid">
-      <!-- 🚨 Aquí están los 76 perfumes -->
-      <div class="card">
-        <img src="img/sauvage.jpg" alt="Sauvage">
-        <h3>Sauvage</h3>
-        <a href="perfume.html?id=sauvage" class="btn">Ver más</a>
-      </div>
 
-      <div class="card">
-        <img src="img/stronger.jpg" alt="Stronger With You">
-        <h3>Stronger With You</h3>
-        <a href="perfume.html?id=stronger" class="btn">Ver más</a>
-      </div>
+<header>
+  <h1>Nova Parfumes</h1>
+  <input type="text" id="searchInput" placeholder="Buscar perfume...">
+</header>
 
-      <div class="card">
-        <img src="img/missdior.jpg" alt="Miss Dior">
-        <h3>Miss Dior</h3>
-        <a href="perfume.html?id=missdior" class="btn">Ver más</a>
-      </div>
+<main>
+  <div id="perfumeGrid" class="grid">
+    <!-- Aquí se llenarán las 76 fichas dinámicamente desde script.js -->
+  </div>
+</main>
 
-      <!-- ... Se repite para todos los perfumes (yo te paso el listado completo en JSON para no escribir 76 a mano) -->
-    </div>
-  </main>
+<section id="cartSection">
+  <h2>Carrito de Compras</h2>
+  <div id="cartItems"></div>
+  <div id="cartTotal"></div>
+  <button id="checkoutBtn">Finalizar Compra</button>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
