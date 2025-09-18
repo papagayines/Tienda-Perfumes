@@ -4,152 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Parfumes</title>
-<style>
-  body { font-family:'Poppins', sans-serif; margin:0; background:#fdfdfd; color:#333; }
-  header { background: #6b5b95; color:#fff; padding:20px; text-align:center; }
-  header h1 { margin:0; }
-  .search-bar { max-width:400px; margin:20px auto; display:flex; }
-  .search-bar input { flex:1; padding:10px; border-radius:8px 0 0 8px; border:1px solid #ccc; outline:none; }
-  .search-bar button { padding:10px 20px; border:none; background:#563d7c; color:#fff; border-radius:0 8px 8px 0; cursor:pointer; transition:0.3s; }
-  .search-bar button:hover { background:#7f5aa2; }
-  section { padding:40px 20px; max-width:1200px; margin:0 auto; }
-  h2 { color:#563d7c; margin-bottom:20px; text-align:center; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
-  .card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer; }
-  .card:hover { transform:translateY(-5px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-  .card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
-  footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <header>
   <h1>Nova Parfumes</h1>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Buscar perfume...">
-    <button onclick="searchPerfume()">Buscar</button>
-  </div>
+  <input type="text" id="search" placeholder="Buscar perfume..." onkeyup="buscarPerfume()">
 </header>
 
-<section id="perfume-section">
-  <h2>Catálogo de Perfumes</h2>
+<section id="catalogo">
   <div class="grid" id="perfumeGrid"></div>
 </section>
 
-<footer>&copy; 2025 Nova Parfumes</footer>
-
 <script>
-const perfumes = [
-  {name:"9PMCH", category:"Hombre"},
-  {name:"212NYCCH", category:"Hombre"},
-  {name:"212VIPBlackCH", category:"Hombre"},
-  {name:"212VIPRoseCH", category:"Mujer"},
-  {name:"AcquaDiGioGiorgioArmani", category:"Hombre"},
-  {name:"AhliKarpos", category:"Mujer"},
-  {name:"AlluresSportChanel", category:"Hombre"},
-  {name:"AmberOudGoldAlHaramain", category:"Mujer"},
-  {name:"AquaDubai", category:"Unisex"},
-  {name:"ArtOfUniverse", category:"Unisex"},
-  {name:"AssadLataffa", category:"Hombre"},
-  {name:"AventusCreed", category:"Hombre"},
-  {name:"BadBoyCH", category:"Hombre"},
-  {name:"BhararaKing", category:"Hombre"},
-  {name:"BlueDeChanel", category:"Hombre"},
-  {name:"BurberryHer", category:"Mujer"},
-  {name:"CHMenCH", category:"Hombre"},
-  {name:"CKBe", category:"Unisex"},
-  {name:"CloudArianaGrande", category:"Mujer"},
-  {name:"ClubDeNuitArmaf", category:"Hombre"},
-  {name:"DelinaParfumsDeMarly", category:"Mujer"},
-  {name:"DevotionD&G", category:"Mujer"},
-  {name:"DubayChicolat", category:"Mujer"},
-  {name:"EclairEclear", category:"Unisex"},
-  {name:"EuphoriaCK", category:"Mujer"},
-  {name:"FameRabanne", category:"Mujer"},
-  {name:"GodOfFire", category:"Unisex"},
-  {name:"GoldFreshMoschino", category:"Mujer"},
-  {name:"GoodGirlCH", category:"Mujer"},
-  {name:"HugoBossNight", category:"Hombre"},
-  {name:"InvictusVictoryPacoRabanne", category:"Hombre"},
-  {name:"J'adoreDior", category:"Mujer"},
-  {name:"JoyDior", category:"Mujer"},
-  {name:"KhamrahAlHaramain", category:"Mujer"},
-  {name:"LaVieEstBelle", category:"Mujer"},
-  {name:"LacosteBlanca", category:"Hombre"},
-  {name:"LacosteNoir", category:"Hombre"},
-  {name:"LatafgaEclaire", category:"Mujer"},
-  {name:"LaytonParfumsDeMarly", category:"Hombre"},
-  {name:"LeBeauLeParfumJPG", category:"Hombre"},
-  {name:"LeMaleElixirJPG", category:"Hombre"},
-  {name:"LightBlueDG", category:"Mujer"},
-  {name:"Meow", category:"Mujer"},
-  {name:"MissDior", category:"Mujer"},
-  {name:"MontBlancExplorer", category:"Hombre"},
-  {name:"MontBlancLegend", category:"Hombre"},
-  {name:"NinaNinaRicci", category:"Mujer"},
-  {name:"NitroRed", category:"Hombre"},
-  {name:"NobleBlushLataffa", category:"Mujer"},
-  {name:"OdisseyChocolatDubay", category:"Unisex"},
-  {name:"OdysseyCandeeArmaf", category:"Unisex"},
-  {name:"OdysseyMandarin", category:"Hombre"},
-  {name:"OlympeaPacoRabanne", category:"Mujer"},
-  {name:"OmbreLeatherTomFord", category:"Hombre"},
-  {name:"OmniaAmathiste", category:"Mujer"},
-  {name:"OmniaCoralBvlgari", category:"Mujer"},
-  {name:"OneMillionPacoRabanne", category:"Hombre"},
-  {name:"OrienticaAmberRouge", category:"Unisex"},
-  {name:"PhantomPacoRabanne", category:"Hombre"},
-  {name:"PradaLunaRossa", category:"Hombre"},
-  {name:"RalphLauren", category:"Mujer"},
-  {name:"SauvageDior", category:"Hombre"},
-  {name:"ScandalMenlJPG", category:"Hombre"},
-  {name:"SiGiorgioArmani", category:"Mujer"},
-  {name:"SorbettoRossoEscada", category:"Mujer"},
-  {name:"SplashCoconutVictoriasSecret", category:"Mujer"},
-  {name:"StrongerWithYou", category:"Hombre"},
-  {name:"ThankUNextArianaGrande", category:"Mujer"},
-  {name:"TheOneDG", category:"Mujer"},
-  {name:"Toy2Moschino", category:"Mujer"},
-  {name:"ValentinoBornInRoma", category:"Hombre"},
-  {name:"YaraMoiLataffa", category:"Mujer"},
-  {name:"YaraRosadaLataffa", category:"Mujer"},
-  {name:"YumYumMoschino", category:"Mujer"},
-  {name:"ChancheEauFraicheChanel", category:"Mujer"},
-  {name:"ChancheEauTendreChanel", category:"Mujer"}
+const perfumesData = [
+  {nombre:"SauvageDior", display:"Sauvage", descripcion:"Aroma fresco y potente para todo el día.", notas:["Bergamota","Pimienta","Ambroxan"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"AcquaDiGioGiorgioArmani", display:"Acqua di Gio", descripcion:"Fresco, ideal para días calurosos o de actividad física.", notas:["Limón","Jazmín","Madera de cedro"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"StrongerWithYou", display:"Stronger With You", descripcion:"Dulce y cálido, perfecto para la noche.", notas:["Violeta","Salvia","Cedro"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"NitroRed", display:"Nitro Red", descripcion:"Aroma intenso y moderno.", notas:["Frutas rojas","Madera","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"MontBlancExplorer", display:"Mont Blanc Explorer", descripcion:"Clásico y elegante, ideal para diario.", notas:["Bergamota","Vetiver","Patchouli"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"MontBlancLegend", display:"Mont Blanc Legend", descripcion:"Elegante y masculino.", notas:["Lavanda","Pine","Sándalo"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"CHMenCH", display:"CH Men", descripcion:"Aromático y sofisticado.", notas:["Cítricos","Especias","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"CKBe", display:"CK Be", descripcion:"Fresco y unisex.", notas:["Lavanda","Sándalo","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"CloudArianaGrande", display:"Cloud", descripcion:"Dulce y seductor.", notas:["Lavanda","Coco","Madera", "Praliné"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ClubDeNuitArmaf", display:"Club De Nuit", descripcion:"Intenso y duradero.", notas:["Bergamota","Manzana","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"DelinaParfumsDeMarly", display:"Delina", descripcion:"Floral y elegante.", notas:["Rosa","Lichi","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"DevotionD&G", display:"Devotion", descripcion:"Romántico y sofisticado.", notas:["Rosa","Naranja","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"DubayChicolat", display:"Dubay Chocolat", descripcion:"Dulce y gourmand.", notas:["Chocolate","Vainilla","Cacao"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"EclairEclear", display:"Eclair", descripcion:"Dulce y suave.", notas:["Caramelo","Vainilla","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"EuphoriaCK", display:"Euphoria", descripcion:"Sexy y envolvente.", notas:["Granada","Orquídea","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"FameRabanne", display:"Fame", descripcion:"Intenso y elegante.", notas:["Frutas","Oro","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"GodOfFire", display:"God Of Fire", descripcion:"Unisex, potente y duradero.", notas:["Cítricos","Madera","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"GoldFreshMoschino", display:"Gold Fresh", descripcion:"Fresco y moderno.", notas:["Cítricos","Floral","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"GoodGirlCH", display:"Good Girl", descripcion:"Sexy y nocturno.", notas:["Almendra","Café","Jazmín"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"HugoBossNight", display:"Hugo Boss Night", descripcion:"Elegante para noche.", notas:["Cardamomo","Cedar","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"InvictusVictoryPacoRabanne", display:"Invictus Victory", descripcion:"Fresco y energético.", notas:["Pomelo","Laurel","Ámbar gris"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"J'adoreDior", display:"J'adore", descripcion:"Floral y elegante.", notas:["Ylang Ylang","Rosa","Jazmín"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"JoyDior", display:"Joy", descripcion:"Fresco y alegre.", notas:["Bergamota","Mandarina","Jazmín"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"KhamrahAlHaramain", display:"Khamrah", descripcion:"Oriental y sofisticado.", notas:["Rosa","Sándalo","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LaVieEstBelle", display:"La Vie Est Belle", descripcion:"Dulce y elegante.", notas:["Pera","Iris","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LacosteBlanca", display:"Lacoste Blanca", descripcion:"Fresco y ligero.", notas:["Cítricos","Jazmín","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LacosteNoir", display:"Lacoste Noir", descripcion:"Intenso y sofisticado.", notas:["Limón","Patchouli","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LatafgaEclaire", display:"Latafga Eclaire", descripcion:"Dulce y delicado.", notas:["Vainilla","Musk","Frutas"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LaytonParfumsDeMarly", display:"Layton", descripcion:"Floral y amaderado.", notas:["Lavanda","Vainilla","Manzana"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LeBeauLeParfumJPG", display:"Le Beau Le Parfum", descripcion:"Romántico y elegante.", notas:["Bergamota","Lavanda","Tonka"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LeMaleElixirJPG", display:"Le Male Elixir", descripcion:"Dulce y seductor.", notas:["Vainilla","Lavanda","Menta"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"LightBlueDG", display:"Light Blue", descripcion:"Fresco y veraniego.", notas:["Limón","Manzana","Cedro"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"Meow", display:"Meow", descripcion:"Dulce y juguetón.", notas:["Frutas rojas","Vainilla","Almizcle"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"MissDior", display:"Miss Dior", descripcion:"Floral y romántico.", notas:["Rosa","Jazmín","Patchouli"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"NinaNinaRicci", display:"Nina", descripcion:"Dulce y juvenil.", notas:["Manzana","Vainilla","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"NitroRed", display:"Nitro Red", descripcion:"Intenso y moderno.", notas:["Frutas rojas","Madera","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"NobleBlushLataffa", display:"Noble Blush", descripcion:"Dulce y floral.", notas:["Rosa","Vainilla","Frutas"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OdisseyChocolatDubay", display:"Odissey Chocolat", descripcion:"Gourmand y delicioso.", notas:["Chocolate","Caramelo","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OdysseyCandeeArmaf", display:"Odyssey Candee", descripcion:"Dulce y alegre.", notas:["Frutas","Caramelo","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OdysseyMandarin", display:"Odyssey Mandarin", descripcion:"Cítrico y fresco.", notas:["Mandarina","Naranja","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OlympeaPacoRabanne", display:"Olympea", descripcion:"Dulce y elegante.", notas:["Vainilla","Jazmín","Sal"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OmbreLeatherTomFord", display:"Ombre Leather", descripcion:"Intenso y masculino.", notas:["Cuero","Jazmín","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OmniaAmathiste", display:"Omnia Amathiste", descripcion:"Floral y afrutado.", notas:["Bergamota","Amatista","Flor de azahar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OmniaCoralBvlgari", display:"Omnia Coral", descripcion:"Frutal y fresco.", notas:["Pomelo","Flor de Hibiscus","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OneMillionPacoRabanne", display:"One Million", descripcion:"Dulce y especiado.", notas:["Naranja","Canela","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"OrienticaAmberRouge", display:"Orientica Amber Rouge", descripcion:"Unisex, cálido y duradero.", notas:["Ámbar","Especias","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"PhantomPacoRabanne", display:"Phantom", descripcion:"Moderno y tecnológico.", notas:["Cítricos","Lavanda","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"PradaLunaRossa", display:"Prada Luna Rossa", descripcion:"Fresco y deportivo.", notas:["Lavanda","Menta","Ámbar"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"RalphLauren", display:"Ralph Lauren", descripcion:"Clásico y elegante.", notas:["Limón","Lavanda","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"SauvageDior", display:"Sauvage", descripcion:"Aroma fresco y potente.", notas:["Bergamota","Pimienta","Ambroxan"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ScandalMenlJPG", display:"Scandal Men", descripcion:"Sexy y atrevido.", notas:["Miel","Cítricos","Patchouli"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"SiGiorgioArmani", display:"Si", descripcion:"Elegante y femenino.", notas:["Rosa","Neroli","Vanilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"SorbettoRossoEscada", display:"Sorbetto Rosso", descripcion:"Frutal y refrescante.", notas:["Frutos rojos","Melón","Rosa"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"SplashCoconutVictoriasSecret", display:"Splash Coconut", descripcion:"Dulce y veraniego.", notas:["Coco","Vainilla","Frutas"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ThankUNextArianaGrande", display:"Thank U Next", descripcion:"Dulce y juvenil.", notas:["Frambuesa","Coco","Crema"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"TheOneDG", display:"The One", descripcion:"Elegante y especiado.", notas:["Naranja","Flor de Loto","Tabaco"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"Toy2Moschino", display:"Toy 2", descripcion:"Dulce y floral.", notas:["Rosa","Miel","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ValentinoBornInRoma", display:"Born In Roma", descripcion:"Floral y amaderado.", notas:["Bergamota","Vainilla","Jazmín"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"YaraMoiLataffa", display:"Yara Moi", descripcion:"Dulce y elegante.", notas:["Vainilla","Rosa","Madera"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"YaraRosadaLataffa", display:"Yara Rosada", descripcion:"Fresco y floral.", notas:["Rosa","Cítricos","Almizcle"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"YumYumMoschino", display:"Yum Yum", descripcion:"Dulce y alegre.", notas:["Cacao","Vainilla","Frutas"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ChancheEauFraicheChanel", display:"Chanche Eau Fraiche", descripcion:"Fresco y ligero.", notas:["Cítricos","Jazmín","Sándalo"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"ChancheEauTendreChanel", display:"Chanche Eau Tendre", descripcion:"Dulce y floral.", notas:["Pomelo","Jazmín","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"9PMCH", display:"9PM", descripcion:"Nocturno y potente.", notas:["Vainilla","Cacao","Especias"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"212NYCCH", display:"212 NYC", descripcion:"Fresco urbano.", notas:["Cítricos","Rosa","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"212VIPBlackCH", display:"212 VIP Black", descripcion:"Sexy y moderno.", notas:["Absenta","Café","Almizcle"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"212VIPRoseCH", display:"212 VIP Rose", descripcion:"Dulce y elegante.", notas:["Frutas rojas","Rosa","Vainilla"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"212VIPWomenCH", display:"212 VIP Women", descripcion:"Fresco y femenino.", notas:["Frambuesa","Flor de Naranjo","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}},
+  {nombre:"CreedAventus", display:"Creed Aventus", descripcion:"Elegante y potente.", notas:["Piña","Bergamota","Musk"], precios:{"30ml":33000,"50ml":45000,"110ml":90000}}
 ];
 
-function loadPerfumes() {
-  const grid = document.getElementById('perfumeGrid');
-  grid.innerHTML = '';
+const perfumeGrid = document.getElementById("perfumeGrid");
+function renderPerfumes(perfumes) {
+  perfumeGrid.innerHTML = "";
   perfumes.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<h3>${p.name}</h3>`;
-    card.onclick = () => { window.location.href = `perfumes.html?perfume=${p.name}`; };
-    grid.appendChild(card);
+    const card = document.createElement("a");
+    card.href = `perfume.html?perfume=${p.nombre}`;
+    card.className = "card";
+    card.innerHTML = `
+      <img src="imagenes/${p.nombre}.jpg" alt="${p.display}">
+      <h3>${p.display}</h3>
+      <p>${p.descripcion}</p>
+    `;
+    perfumeGrid.appendChild(card);
   });
 }
+renderPerfumes(perfumesData);
 
-function searchPerfume() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = perfumes.filter(p => p.name.toLowerCase().includes(input));
-  const grid = document.getElementById('perfumeGrid');
-  grid.innerHTML = '';
-  if(filtered.length > 0){
-    filtered.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `<h3>${p.name}</h3>`;
-      card.onclick = () => { window.location.href = `perfumes.html?perfume=${p.name}`; };
-      grid.appendChild(card);
-    });
-  } else {
-    grid.innerHTML = `<p style="text-align:center; grid-column: 1 / -1;">No se encontró el perfume</p>`;
-  }
+function buscarPerfume() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const filtrados = perfumesData.filter(p => p.display.toLowerCase().includes(query));
+  renderPerfumes(filtrados);
 }
-
-window.onload = loadPerfumes;
 </script>
-
 </body>
 </html>
