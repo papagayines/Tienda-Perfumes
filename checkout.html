@@ -38,10 +38,6 @@ button:hover{background:#ff1c1c;}
 </div>
 
 <script>
-const template_id = "template_9pw5f7b";
-const service_id = "service_4zsh227";
-const numero_transfer = "+57 3115180995";
-
 function mostrarCarrito(){
     const cart = JSON.parse(localStorage.getItem('cart'))||[];
     const div = document.getElementById('cart');
@@ -51,5 +47,16 @@ function mostrarCarrito(){
         div.innerHTML += `<div class="cart-item"><span>${item.nombre}</span><span>${item.precio.toLocaleString()} COP</span></div>`;
         total += item.precio;
     });
-    document.getElementById('total').innerText
+    document.getElementById('total').innerText = total.toLocaleString();
+}
 
+function finalizar(){
+    alert("Gracias por tu compra. Te contactaremos pronto.");
+    localStorage.removeItem('cart');
+    window.location.href="index.html";
+}
+
+mostrarCarrito();
+</script>
+</body>
+</html>
