@@ -9,7 +9,7 @@ body { font-family:'Arial', sans-serif; margin:0; background:#f4f4f4; color:#333
 header { background:#6b5b95; color:white; padding:20px; text-align:center; }
 .container { max-width:900px; margin:20px auto; padding:20px; background:white; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
 h1 { text-align:center; }
-img { width:200px; display:block; margin:0 auto 20px; border-radius:15px; }
+img { width:250px; display:block; margin:0 auto 20px; border-radius:15px; }
 .descripcion { text-align:center; margin-bottom:20px; font-size:16px; color:#555;}
 .selector { display:flex; justify-content:center; gap:15px; margin-bottom:20px;}
 .selector button { padding:12px 20px; border-radius:12px; border:none; cursor:pointer; font-size:14px; transition:0.3s;}
@@ -33,22 +33,21 @@ img { width:200px; display:block; margin:0 auto 20px; border-radius:15px; }
 
 <div id="precio">Selecciona un tamaño</div>
 
-<button class="comprar" onclick="agregarCarrito()">Añadir al carrito / Pagar</button>
+<button class="comprar" onclick="agregarCarrito()">Añadir al carrito</button>
 </div>
 
 <script>
-// Lista de perfumes
 const perfumes = {
 "sauvage": {nombre:"Sauvage Dior", imagen:"img/sauvage.jpg", descripcion:"Fresco y elegante, ideal para cualquier ocasión.", precios:{30:33000,50:45000,110:90000}},
 "acqua-di-gio": {nombre:"Acqua di Gio", imagen:"img/acqua-di-gio.jpg", descripcion:"Muy fresco, excelente para días calurosos y actividad física.", precios:{30:33000,50:45000,110:90000}},
 "miss-dior": {nombre:"Miss Dior", imagen:"img/miss-dior.jpg", descripcion:"Dulce y femenino, perfecto para eventos especiales.", precios:{30:33000,50:45000,110:90000}},
-// ... Agrega los 76 perfumes aquí con key única
+"212-vip": {nombre:"212 VIP", imagen:"img/212-vip.jpg", descripcion:"Juvenil y energético, ideal para la noche.", precios:{30:33000,50:45000,110:90000}},
+"creed-aventus": {nombre:"Creed Aventus", imagen:"img/creed-aventus.jpg", descripcion:"Un clásico masculino con notas afrutadas y ahumadas.", precios:{30:33000,50:45000,110:90000}},
+// 👉 Aquí pegas los 76 perfumes (cada uno con id único, nombre, imagen y descripción)
 };
 
-// Obtener perfume desde URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get('perfume');
-
 let precioSeleccionado = 0;
 
 if(perfumes[id]){
@@ -84,4 +83,3 @@ function agregarCarrito(){
 
 </body>
 </html>
-
