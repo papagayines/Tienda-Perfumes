@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito</title>
+<style>
+body { font-family:'Poppins', sans-serif; background:#f5f5f5; color:#333; padding:20px; }
+h1 { color:#6b5b95; }
+table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+th, td { border:1px solid #ccc; padding:10px; text-align:center; }
+button { background:#6b5b95; color:#fff; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; }
+button:hover { background:#563d7c; }
+</style>
+</head>
+<body>
+
+<h1>Carrito de Compras</h1>
+<table id="cart-table">
+<thead>
+<tr>
+<th>Producto</th>
+<th>Precio</th>
+<th>Cantidad</th>
+<th>Total</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<p>Total a pagar: <span id="total">0</span> COP</p>
+
+<h2>Información de compra</h2>
+<form id="checkout-form">
+<input type="text" id="name" placeholder="Nombre completo" required><br><br>
+<input type="text" id="contact" placeholder="Teléfono / WhatsApp" required><br><br>
+<input type="text" id="address" placeholder="Dirección de entrega" required><br><br>
+<label>Forma de pago:</label><br>
+<select id="payment">
+<option value="Nequi">Nequi</option>
+<option value="Tranfiya">Tranfiya</option>
+<option value="Efectivo">Efectivo</option>
+</select><br><br>
+<button type="submit">Finalizar Compra</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init("YOUR_EMAILJS_USER_ID"); // reemplaza con tu User ID de EmailJS
+
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function renderCart(){
+    const tbody = document.querySelector('#cart-table tbody');
+    tbody.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td><input type="number" min="1" value="${item.qty || 1}" data-index="${index}" class="qty-input"></td>
+            <td>${item.price * (item.qty || 1)}</td>
+            <td><button data-index="${index}" class="remove-btn">Eliminar</button></td>
+        `;
+        tbody.appendChild(tr);
+        total += item.price * (item.qty || 1);
+    });
+    document.getElementById('total').textContent = total;
+}
+
+renderCart();
+
+// Actualizar cantidad
+document.addEventListener('input', e=>{
+    if(e.target.classList.contains('qty-input')){
+        const idx = e.target.dataset.index;
+        cart[idx].qty = parseInt(e.target.value);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+});
+
+// Eliminar
+document.addEventListener('click', e=>{
+    if(e.target.classList.contains('remove-btn')){
+        const idx = e.target.dataset.index;
+        cart.splice(idx,1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+});
+
+// Finalizar compra
+document.getElementById('checkout-form').onsubmit = function(e){
+    e.preventDefault();
+    const data = {
+        name: document.getElementById('name').value,
+        contact: document.getElementById('contact').value,
+        address: document.getElementById('address').value,
+        payment: document.getElementById('payment').value,
+        cart: JSON.stringify(cart)
+    };
+
+    emailjs.send('service_4zsh227', 'template_9pw5f7b', data)
+    .then(()=>{
+        alert('Pedido enviado con éxito');
+        localStorage.removeItem('cart');
+        window.location.href = 'index.html';
+    }, (err)=>{
+        alert('Error al enviar: '+err);
+    });
+}
+</script>
+
+</body>
+</html>

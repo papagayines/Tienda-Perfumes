@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfume</title>
+<style>
+body { font-family:'Poppins', sans-serif; background:#f5f5f5; color:#333; padding:20px; }
+h1 { color:#6b5b95; }
+button { background:#6b5b95; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; margin-top:10px; }
+button:hover { background:#563d7c; }
+a { text-decoration:none; color:#6b5b95; display:inline-block; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<h1 id="perfume-name"></h1>
+<p>Precio: <span id="price"></span> COP</p>
+<p id="description"></p>
+<button id="add-btn">Agregar al carrito</button>
+<a href="cart.html">Ir al carrito</a>
+
+<script>
+// Información de perfumes (precio y descripción)
+const perfumes = {
+  "SauvageDior": {price:120000, description:"Aroma fresco, notas de bergamota y sándalo."},
+  "ChancheEauFraicheChanel": {price:95000, description:"Fragancia floral y cítrica."},
+  "CHMenCH": {price:110000, description:"Notas amaderadas y especiadas."},
+  "CKBe": {price:90000, description:"Fragancia unisex ligera y fresca."},
+  "CloudArianaGrande": {price:115000, description:"Dulce y floral con vainilla."},
+  // ... agrega los 76 perfumes aquí con precio real o inventado
+};
+
+// Obtener parámetro
+const params = new URLSearchParams(window.location.search);
+const name = params.get('name');
+
+// Mostrar datos
+if(perfumes[name]){
+    document.getElementById('perfume-name').textContent = name;
+    document.getElementById('price').textContent = perfumes[name].price;
+    document.getElementById('description').textContent = perfumes[name].description;
+}
+
+// Agregar al carrito
+document.getElementById('add-btn').onclick = function(){
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push({name, price: perfumes[name].price});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(name + ' agregado al carrito');
+}
+</script>
+
+</body>
+</html>
