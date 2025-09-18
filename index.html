@@ -8,11 +8,13 @@
 body { font-family:'Poppins', sans-serif; margin:0; background:#f5f5f5; color:#333; }
 header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
 header h1 { margin:0; }
-input { padding:10px; width:90%; margin:20px auto; display:block; border-radius:8px; border:1px solid #ccc;}
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; padding:0 20px;}
-.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; }
+section { padding:40px 20px; max-width:1200px; margin:0 auto; }
+h2 { color:#563d7c; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+.card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; text-decoration:none; color:#333; }
 .card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-.card a { text-decoration:none; color:#6b5b95; font-weight:bold; display:block; padding:10px 0;}
+.card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
+input[type="text"] { width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:1px solid #ccc; }
 footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
 </style>
 </head>
@@ -22,115 +24,74 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 <h1>Tienda de Perfumes</h1>
 </header>
 
-<input type="text" id="search-bar" placeholder="Buscar perfume..." oninput="searchPerfume()">
+<section>
+<h2>Buscar Perfume</h2>
+<input type="text" id="search" placeholder="Escribe el nombre del perfume...">
+<div id="search-results" class="grid"></div>
+</section>
 
+<section id="perfumes">
+<h2>Todos los Perfumes</h2>
 <div class="grid" id="perfume-grid"></div>
+</section>
 
 <footer>&copy; 2025 Tienda de Perfumes</footer>
 
 <script>
+// Lista de los 76 perfumes
 const perfumes = [
-  {name:"SauvageDior", page:"perfumes/SauvageDior.html"},
-  {name:"ChancheEauFraicheChanel", page:"perfumes/ChancheEauFraicheChanel.html"},
-  {name:"ChancheEauTendreChanel", page:"perfumes/ChancheEauTendreChanel.html"},
-  {name:"CHMenCH", page:"perfumes/CHMenCH.html"},
-  {name:"CKBe", page:"perfumes/CKBe.html"},
-  {name:"CloudArianaGrande", page:"perfumes/CloudArianaGrande.html"},
-  {name:"ClubDeNuitArmaf", page:"perfumes/ClubDeNuitArmaf.html"},
-  {name:"DelinaParfumsDeMarly", page:"perfumes/DelinaParfumsDeMarly.html"},
-  {name:"DevotionD&G", page:"perfumes/DevotionD&G.html"},
-  {name:"DubayChicolat", page:"perfumes/DubayChicolat.html"},
-  {name:"EclairEclear", page:"perfumes/EclairEclear.html"},
-  {name:"EuphoriaCK", page:"perfumes/EuphoriaCK.html"},
-  {name:"FameRabanne", page:"perfumes/FameRabanne.html"},
-  {name:"GodOfFire(unisex)", page:"perfumes/GodOfFire(unisex).html"},
-  {name:"GoldFreshMoschino", page:"perfumes/GoldFreshMoschino.html"},
-  {name:"GoodGirlCH", page:"perfumes/GoodGirlCH.html"},
-  {name:"HugoBossNight", page:"perfumes/HugoBossNight.html"},
-  {name:"InvictusVictoryPacoRabanne", page:"perfumes/InvictusVictoryPacoRabanne.html"},
-  {name:"J'adoreDior", page:"perfumes/J'adoreDior.html"},
-  {name:"JoyDior", page:"perfumes/JoyDior.html"},
-  {name:"KhamrahAlHaramain", page:"perfumes/KhamrahAlHaramain.html"},
-  {name:"LaVieEstBelle", page:"perfumes/LaVieEstBelle.html"},
-  {name:"LacosteBlanca", page:"perfumes/LacosteBlanca.html"},
-  {name:"LacosteNoir", page:"perfumes/LacosteNoir.html"},
-  {name:"LatafgaEclaire", page:"perfumes/LatafgaEclaire.html"},
-  {name:"LaytonParfumsDeMarly", page:"perfumes/LaytonParfumsDeMarly.html"},
-  {name:"LeBeauLeParfumJPG", page:"perfumes/LeBeauLeParfumJPG.html"},
-  {name:"LeMaleElixirJPG", page:"perfumes/LeMaleElixirJPG.html"},
-  {name:"LightBlueD&G", page:"perfumes/LightBlueD&G.html"},
-  {name:"Meow", page:"perfumes/Meow.html"},
-  {name:"MissDior", page:"perfumes/MissDior.html"},
-  {name:"MontBlancExplorer", page:"perfumes/MontBlancExplorer.html"},
-  {name:"MontBlancLegend", page:"perfumes/MontBlancLegend.html"},
-  {name:"NinaNinaRicci", page:"perfumes/NinaNinaRicci.html"},
-  {name:"NitroRed", page:"perfumes/NitroRed.html"},
-  {name:"NobleBlushLataffa", page:"perfumes/NobleBlushLataffa.html"},
-  {name:"OdisseyChocolatDubay", page:"perfumes/OdisseyChocolatDubay.html"},
-  {name:"OdysseyCandeeArmaf", page:"perfumes/OdysseyCandeeArmaf.html"},
-  {name:"OdysseyMandarin", page:"perfumes/OdysseyMandarin.html"},
-  {name:"OlympeaPacoRabanne", page:"perfumes/OlympeaPacoRabanne.html"},
-  {name:"OmbreLeatherTomFord", page:"perfumes/OmbreLeatherTomFord.html"},
-  {name:"OmniaAmathiste", page:"perfumes/OmniaAmathiste.html"},
-  {name:"OmniaCoralBvlgari", page:"perfumes/OmniaCoralBvlgari.html"},
-  {name:"OneMillionPacoRabanne", page:"perfumes/OneMillionPacoRabanne.html"},
-  {name:"OrienticaAmberRouge(unisex)", page:"perfumes/OrienticaAmberRouge(unisex).html"},
-  {name:"PhantomPacoRabanne", page:"perfumes/PhantomPacoRabanne.html"},
-  {name:"PradaLunaRossa", page:"perfumes/PradaLunaRossa.html"},
-  {name:"RalphLauren", page:"perfumes/RalphLauren.html"},
-  {name:"SauvageDior", page:"perfumes/SauvageDior.html"},
-  {name:"ScandalMenlJPG", page:"perfumes/ScandalMenlJPG.html"},
-  {name:"SiGiorgioArmani", page:"perfumes/SiGiorgioArmani.html"},
-  {name:"SorbettoRossoEscada", page:"perfumes/SorbettoRossoEscada.html"},
-  {name:"SplashCoconutVictoria'sSecret", page:"perfumes/SplashCoconutVictoria'sSecret.html"},
-  {name:"StrongerWithYou", page:"perfumes/StrongerWithYou.html"},
-  {name:"ThankUNextArianaGrande", page:"perfumes/ThankUNextArianaGrande.html"},
-  {name:"TheOneD&G", page:"perfumes/TheOneD&G.html"},
-  {name:"Toy2Moschino", page:"perfumes/Toy2Moschino.html"},
-  {name:"ValentinoBornInRoma", page:"perfumes/ValentinoBornInRoma.html"},
-  {name:"YaraMoiLataffa", page:"perfumes/YaraMoiLataffa.html"},
-  {name:"YaraRosadaLataffa", page:"perfumes/YaraRosadaLataffa.html"},
-  {name:"YumYumMoschino", page:"perfumes/YumYumMoschino.html"},
-  {name:"9PMCH", page:"perfumes/9PMCH.html"},
-  {name:"212NYCCH", page:"perfumes/212NYCCH.html"},
-  {name:"212VIPBlackCH", page:"perfumes/212VIPBlackCH.html"},
-  {name:"212VIPRoseCH", page:"perfumes/212VIPRoseCH.html"},
-  {name:"AcquaDiGioGiorgioArmani", page:"perfumes/AcquaDiGioGiorgioArmani.html"},
-  {name:"AhliKarpos", page:"perfumes/AhliKarpos.html"},
-  {name:"AlluresSportChanel", page:"perfumes/AlluresSportChanel.html"},
-  {name:"AmberOudGoldAlHaramain", page:"perfumes/AmberOudGoldAlHaramain.html"},
-  {name:"AquaDubai(unisex)", page:"perfumes/AquaDubai(unisex).html"},
-  {name:"ArtOfUniverse", page:"perfumes/ArtOfUniverse.html"},
-  {name:"AssadLataffa", page:"perfumes/AssadLataffa.html"},
-  {name:"AventusCreed", page:"perfumes/AventusCreed.html"},
-  {name:"BadBoyCH", page:"perfumes/BadBoyCH.html"},
-  {name:"BhararaKing", page:"perfumes/BhararaKing.html"},
-  {name:"BlueDeChanel", page:"perfumes/BlueDeChanel.html"},
-  {name:"BurberryHer", page:"perfumes/BurberryHer.html"}
+  {name:"SauvageDior"}, {name:"ChancheEauFraicheChanel"}, {name:"ChancheEauTendreChanel"},
+  {name:"CHMenCH"}, {name:"CKBe"}, {name:"CloudArianaGrande"}, {name:"ClubDeNuitArmaf"},
+  {name:"DelinaParfumsDeMarly"}, {name:"DevotionD&G"}, {name:"DubayChicolat"}, {name:"EclairEclear"},
+  {name:"EuphoriaCK"}, {name:"FameRabanne"}, {name:"GodOfFire(unisex)"}, {name:"GoldFreshMoschino"},
+  {name:"GoodGirlCH"}, {name:"HugoBossNight"}, {name:"InvictusVictoryPacoRabanne"}, {name:"J'adoreDior"},
+  {name:"JoyDior"}, {name:"KhamrahAlHaramain"}, {name:"La Vie Est Belle"}, {name:"LacosteBlanca"},
+  {name:"LacosteNoir"}, {name:"LatafgaEclaire"}, {name:"LaytonParfumsDeMarly"}, {name:"LeBeauLeParfumJPG"},
+  {name:"LeMaleElixirJPG"}, {name:"LightBlue D&G"}, {name:"Meow"}, {name:"MissDior"}, {name:"MontBlancExplorer"},
+  {name:"MontBlancLegend"}, {name:"NinaNinaRicci"}, {name:"NitroRed"}, {name:"NobleBlushLataffa"},
+  {name:"OdisseyChocolatDubay"}, {name:"OdysseyCandeeArmaf"}, {name:"OdysseyMandarin"}, {name:"OlympeaPacoRabanne"},
+  {name:"OmbreLeatherTomFord"}, {name:"OmniaAmathiste"}, {name:"OmniaCoralBvlgari"}, {name:"OneMillionPacoRabanne"},
+  {name:"OrienticaAmberRouge(unisex)"}, {name:"PhantomPacoRabanne"}, {name:"PradaLunaRossa"}, {name:"RalphLauren"},
+  {name:"ScandalMenlJPG"}, {name:"SiGiorgioArmani"}, {name:"SorbettoRossoEscada"}, {name:"SplashCoconutVictoria'sSecret"},
+  {name:"StrongerWithYou"}, {name:"ThankUNextArianaGrande"}, {name:"TheOneD&G"}, {name:"Toy2Moschino"},
+  {name:"ValentinoBornInRoma"}, {name:"YaraMoiLataffa"}, {name:"YaraRosadaLataffa"}, {name:"YumYumMoschino"},
+  {name:"9PMCH"}, {name:"212NYCCH"}, {name:"212VIPBlackCH"}, {name:"212VIPRoseCH"}, {name:"AcquaDiGioGiorgioArmani"},
+  {name:"AhliKarpos"}, {name:"AlluresSportChanel"}, {name:"AmberOudGoldAlHaramain"}, {name:"AquaDubai(unisex)"},
+  {name:"ArtOfUniverse"}, {name:"AssadLataffa"}, {name:"AventusCreed"}, {name:"BadBoyCH"}, {name:"BhararaKing"},
+  {name:"BlueDeChanel"}, {name:"BurberryHer"}
 ];
 
-let filteredPerfumes = [...perfumes];
+// Mostrar todos los perfumes en la grilla
+const grid = document.getElementById('perfume-grid');
+perfumes.forEach(p => {
+    const a = document.createElement('a');
+    a.href = `perfume.html?name=${encodeURIComponent(p.name)}`;
+    a.className = 'card';
+    a.innerHTML = `<h3>${p.name}</h3>`;
+    grid.appendChild(a);
+});
 
-function renderPerfumes(){
-  const grid = document.getElementById('perfume-grid');
-  grid.innerHTML='';
-  filteredPerfumes.forEach(p=>{
-    let div = document.createElement('div');
-    div.className='card';
-    div.innerHTML=`<a href="${p.page}">${p.name}</a>`;
-    grid.appendChild(div);
-  });
-}
-
-function searchPerfume(){
-  const term = document.getElementById('search-bar').value.toLowerCase();
-  filteredPerfumes = perfumes.filter(p => p.name.toLowerCase().includes(term));
-  renderPerfumes();
-}
-
-window.onload = renderPerfumes;
+// Buscador
+const searchInput = document.getElementById('search');
+const results = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+    const value = searchInput.value.toLowerCase();
+    results.innerHTML = '';
+    if(value){
+        const filtered = perfumes.filter(p => p.name.toLowerCase().includes(value));
+        if(filtered.length === 0){
+            results.innerHTML = '<p>No se encontró el perfume</p>';
+        }
+        filtered.forEach(p => {
+            const a = document.createElement('a');
+            a.href = `perfume.html?name=${encodeURIComponent(p.name)}`;
+            a.className = 'card';
+            a.innerHTML = `<h3>${p.name}</h3>`;
+            results.appendChild(a);
+        });
+    }
+});
 </script>
+
 </body>
 </html>
-
-
