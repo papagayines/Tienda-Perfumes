@@ -17,9 +17,11 @@ h3 { color:#6b5b95; margin-bottom:10px; }
 .card h3 { margin-top:10px; font-size:1em; }
 footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
 #search-container { text-align:center; margin:20px 0; }
-#search-input { padding:8px 12px; width:200px; border-radius:6px; border:1px solid #ccc; }
+#search-input { padding:8px 12px; width:250px; border-radius:6px; border:1px solid #ccc; }
 #search-button { padding:8px 12px; border:none; border-radius:6px; background:#563d7c; color:#fff; cursor:pointer; }
 #search-button:hover { background:#6b5b95; }
+#search-results a { display:block; margin:5px 0; color:#6b5b95; text-decoration:none; }
+#search-results a:hover { text-decoration:underline; }
 @media(max-width:900px) {.grid {grid-template-columns:repeat(2,1fr);}}
 @media(max-width:500px) {.grid {grid-template-columns:1fr;}}
 </style>
@@ -33,7 +35,7 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 <div id="search-container">
   <input type="text" id="search-input" placeholder="Buscar perfume...">
   <button id="search-button" onclick="buscarPerfume()">Buscar</button>
-  <p id="search-result" style="color:red;"></p>
+  <div id="search-results"></div>
 </div>
 
 <!-- SECCIÓN HOMBRES -->
@@ -42,11 +44,11 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 
 <h3>Frescos</h3>
 <div class="grid">
-  <a href="perfumes/SauvageDior.html" class="card"><h3>Sauvage Dior</h3></a>
   <a href="perfumes/212NYCCH.html" class="card"><h3>212 NYC</h3></a>
   <a href="perfumes/CHMenCH.html" class="card"><h3>CH Men</h3></a>
   <a href="perfumes/ClubDeNuitArmaf.html" class="card"><h3>Club De Nuit Armaf</h3></a>
-  <a href="perfumes/AcquaDiGioGiorgioArmani.html" class="card"><h3>Acqua Di Gio Armani</h3></a>
+  <a href="perfumes/AcquaDiGioGiorgioArmani.html" class="card"><h3>Acqua Di Gio</h3></a>
+  <a href="perfumes/BlueDeChanel.html" class="card"><h3>Blue De Chanel</h3></a>
 </div>
 
 <h3>Dulces</h3>
@@ -59,15 +61,16 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 
 <h3>Otros</h3>
 <div class="grid">
-  <a href="perfumes/LaytonParfumsDeMarly.html" class="card"><h3>Layton Parfums De Marly</h3></a>
-  <a href="perfumes/OmbreLeatherTomFord.html" class="card"><h3>Ombre Leather Tom Ford</h3></a>
+  <a href="perfumes/LaytonParfumsDeMarly.html" class="card"><h3>Layton</h3></a>
+  <a href="perfumes/OmbreLeatherTomFord.html" class="card"><h3>Ombre Leather</h3></a>
   <a href="perfumes/MontBlancExplorer.html" class="card"><h3>Mont Blanc Explorer</h3></a>
   <a href="perfumes/MontBlancLegend.html" class="card"><h3>Mont Blanc Legend</h3></a>
   <a href="perfumes/BadBoyCH.html" class="card"><h3>Bad Boy</h3></a>
   <a href="perfumes/BhararaKing.html" class="card"><h3>Bharara King</h3></a>
-  <a href="perfumes/BlueDeChanel.html" class="card"><h3>Blue De Chanel</h3></a>
+  <a href="perfumes/SauvageDior.html" class="card"><h3>Sauvage Dior</h3></a>
+  <a href="perfumes/PhantomPacoRabanne.html" class="card"><h3>Phantom</h3></a>
+  <a href="perfumes/SiGiorgioArmani.html" class="card"><h3>Si Giorgio Armani</h3></a>
 </div>
-
 </section>
 
 <!-- SECCIÓN MUJERES -->
@@ -78,97 +81,39 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 <div class="grid">
   <a href="perfumes/LightBlueDG.html" class="card"><h3>Light Blue D&G</h3></a>
   <a href="perfumes/OmniaAmathiste.html" class="card"><h3>Omnia Amathiste</h3></a>
-  <a href="perfumes/OmniaCoralBvlgari.html" class="card"><h3>Omnia Coral Bvlgari</h3></a>
+  <a href="perfumes/OmniaCoralBvlgari.html" class="card"><h3>Omnia Coral</h3></a>
 </div>
 
 <h3>Dulces</h3>
 <div class="grid">
   <a href="perfumes/MissDior.html" class="card"><h3>Miss Dior</h3></a>
-  <a href="perfumes/J'adoreDior.html" class="card"><h3>J'adore Dior</h3></a>
+  <a href="perfumes/J-adoreDior.html" class="card"><h3>J'adore Dior</h3></a>
   <a href="perfumes/JoyDior.html" class="card"><h3>Joy Dior</h3></a>
   <a href="perfumes/DevotionD&G.html" class="card"><h3>Devotion D&G</h3></a>
-  <a href="perfumes/FameRabanne.html" class="card"><h3>Fame Rabanne</h3></a>
+  <a href="perfumes/FameRabanne.html" class="card"><h3>Fame</h3></a>
   <a href="perfumes/LaVieEstBelle.html" class="card"><h3>La Vie Est Belle</h3></a>
   <a href="perfumes/GoodGirlCH.html" class="card"><h3>Good Girl</h3></a>
+  <a href="perfumes/SplashCoconutVictoriasSecret.html" class="card"><h3>Splash Coconut</h3></a>
+  <a href="perfumes/ThankUNextArianaGrande.html" class="card"><h3>Thank U Next</h3></a>
+  <a href="perfumes/TheOneD&G.html" class="card"><h3>The One</h3></a>
 </div>
 
 <h3>Otros</h3>
 <div class="grid">
-  <a href="perfumes/DelinaParfumsDeMarly.html" class="card"><h3>Delina Parfums De Marly</h3></a>
+  <a href="perfumes/DelinaParfumsDeMarly.html" class="card"><h3>Delina</h3></a>
   <a href="perfumes/RalphLauren.html" class="card"><h3>Ralph Lauren</h3></a>
   <a href="perfumes/BurberryHer.html" class="card"><h3>Burberry Her</h3></a>
-  <a href="perfumes/YumYumMoschino.html" class="card"><h3>Yum Yum Moschino</h3></a>
+  <a href="perfumes/YumYumMoschino.html" class="card"><h3>Yum Yum</h3></a>
+  <a href="perfumes/YaraRosadaLataffa.html" class="card"><h3>Yara Rosada</h3></a>
+  <a href="perfumes/YaraMoiLataffa.html" class="card"><h3>Yara Moi</h3></a>
+  <a href="perfumes/Meow.html" class="card"><h3>Meow</h3></a>
 </div>
-
 </section>
 
 <!-- SECCIÓN UNISEX -->
 <section id="unisex">
 <h2>Unisex</h2>
-
-<h3>Frescos / Dulces</h3>
 <div class="grid">
   <a href="perfumes/OrienticaAmberRouge.html" class="card"><h3>Orientica Amber Rouge</h3></a>
   <a href="perfumes/AquaDubai-unisex.html" class="card"><h3>Aqua Dubai</h3></a>
-  <a href="perfumes/GodOfFire-unisex.html" class="card"><h3>God Of Fire</h3></a>
-  <a href="perfumes/OdysseyCandeeArmaf.html" class="card"><h3>Odyssey Candee Armaf</h3></a>
-  <a href="perfumes/OdisseyChocolatDubay.html" class="card"><h3>Odyssey Chocolat Dubay</h3></a>
-</div>
-
-</section>
-
-<footer>&copy; 2025 Tienda de Perfumes</footer>
-
-<script>
-const perfumes = {
-  "Sauvage Dior":"perfumes/SauvageDior.html",
-  "212 NYC":"perfumes/212NYCCH.html",
-  "CH Men":"perfumes/CHMenCH.html",
-  "Club De Nuit Armaf":"perfumes/ClubDeNuitArmaf.html",
-  "Acqua Di Gio Armani":"perfumes/AcquaDiGioGiorgioArmani.html",
-  "Stronger With You":"perfumes/StrongerWithYou.html",
-  "Nitro Red":"perfumes/NitroRed.html",
-  "One Million":"perfumes/OneMillionPacoRabanne.html",
-  "Invictus Victory":"perfumes/InvictusVictoryPacoRabanne.html",
-  "Layton Parfums De Marly":"perfumes/LaytonParfumsDeMarly.html",
-  "Ombre Leather Tom Ford":"perfumes/OmbreLeatherTomFord.html",
-  "Mont Blanc Explorer":"perfumes/MontBlancExplorer.html",
-  "Mont Blanc Legend":"perfumes/MontBlancLegend.html",
-  "Bad Boy":"perfumes/BadBoyCH.html",
-  "Bharara King":"perfumes/BhararaKing.html",
-  "Blue De Chanel":"perfumes/BlueDeChanel.html",
-  "Light Blue D&G":"perfumes/LightBlueDG.html",
-  "Omnia Amathiste":"perfumes/OmniaAmathiste.html",
-  "Omnia Coral Bvlgari":"perfumes/OmniaCoralBvlgari.html",
-  "Miss Dior":"perfumes/MissDior.html",
-  "J'adore Dior":"perfumes/J'adoreDior.html",
-  "Joy Dior":"perfumes/JoyDior.html",
-  "Devotion D&G":"perfumes/DevotionD&G.html",
-  "Fame Rabanne":"perfumes/FameRabanne.html",
-  "La Vie Est Belle":"perfumes/LaVieEstBelle.html",
-  "Good Girl":"perfumes/GoodGirlCH.html",
-  "Delina Parfums De Marly":"perfumes/DelinaParfumsDeMarly.html",
-  "Ralph Lauren":"perfumes/RalphLauren.html",
-  "Burberry Her":"perfumes/BurberryHer.html",
-  "Yum Yum Moschino":"perfumes/YumYumMoschino.html",
-  "Orientica Amber Rouge":"perfumes/OrienticaAmberRouge.html",
-  "Aqua Dubai":"perfumes/AquaDubai-unisex.html",
-  "God Of Fire":"perfumes/GodOfFire-unisex.html",
-  "Odyssey Candee Armaf":"perfumes/OdysseyCandeeArmaf.html",
-  "Odyssey Chocolat Dubay":"perfumes/OdisseyChocolatDubay.html"
-};
-
-function buscarPerfume() {
-  const input = document.getElementById("search-input").value.trim();
-  const result = perfumes[input];
-  const msg = document.getElementById("search-result");
-  if(result) {
-    window.location.href = result;
-  } else {
-    msg.textContent = "No se encontró el perfume.";
-  }
-}
-</script>
-
-</body>
-</html>
+  <a href="perfumes/GodOfFire-unisex.html" class="card"><h3>God Of
