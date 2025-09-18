@@ -3,81 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Parfumes - Catálogo</title>
+<title>Nova Parfumes</title>
 <style>
-  body { font-family:'Poppins', sans-serif; background:#fdfcfb; margin:0; padding:0; color:#333; }
-  header { background:#6b5b95; color:#fff; text-align:center; padding:20px; }
-  header h1 { font-size:2em; }
+  body { font-family:'Poppins', sans-serif; margin:0; background:#fdfdfd; color:#333; }
+  header { background: #6b5b95; color:#fff; padding:20px; text-align:center; }
+  header h1 { margin:0; }
   .search-bar { max-width:400px; margin:20px auto; display:flex; }
-  .search-bar input { flex:1; padding:10px; border-radius:8px 0 0 8px; border:none; outline:none; }
-  .search-bar button { padding:10px; border:none; background:#ff7f50; color:#fff; cursor:pointer; border-radius:0 8px 8px 0; }
-  .catalogo { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; max-width:1200px; margin:20px auto; }
-  .perfume-card { background:#f5f3f7; border-radius:12px; padding:15px; text-align:center; transition:0.3s; }
-  .perfume-card:hover { transform:translateY(-5px); box-shadow:0 5px 15px rgba(0,0,0,0.2); }
-  .perfume-card h3 { color:#563d7c; margin-bottom:10px; }
-  .perfume-card button { margin-top:10px; padding:8px 12px; border:none; border-radius:8px; background:#563d7c; color:#fff; cursor:pointer; transition:0.3s; }
-  .perfume-card button:hover { background:#6b5b95; }
+  .search-bar input { flex:1; padding:10px; border-radius:8px 0 0 8px; border:1px solid #ccc; outline:none; }
+  .search-bar button { padding:10px 20px; border:none; background:#563d7c; color:#fff; border-radius:0 8px 8px 0; cursor:pointer; transition:0.3s; }
+  .search-bar button:hover { background:#7f5aa2; }
+  section { padding:40px 20px; max-width:1200px; margin:0 auto; }
+  h2 { color:#563d7c; margin-bottom:20px; text-align:center; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+  .card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer; }
+  .card:hover { transform:translateY(-5px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
+  footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Nova Parfumes</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Buscar perfume...">
+    <button onclick="searchPerfume()">Buscar</button>
+  </div>
 </header>
 
-<div class="search-bar">
-  <input type="text" id="search-input" placeholder="Buscar perfume...">
-  <button id="search-btn">Buscar</button>
-</div>
+<section id="perfume-section">
+  <h2>Catálogo de Perfumes</h2>
+  <div class="grid" id="perfumeGrid"></div>
+</section>
 
-<div class="catalogo" id="catalogo"></div>
+<footer>&copy; 2025 Nova Parfumes</footer>
 
 <script>
-  // --- Array de perfumes (completo con 76, ejemplo reducido aquí) ---
-  const perfumes = [
-    { nombre:"Acqua Di Gio", categoria:"Hombre" },
-    { nombre:"Miss Dior", categoria:"Mujer" },
-    { nombre:"God Of Fire", categoria:"Unisex" }
-    // Completa los 76 perfumes aquí
-  ];
+const perfumes = [
+  {name:"9PMCH", category:"Hombre"},
+  {name:"212NYCCH", category:"Hombre"},
+  {name:"212VIPBlackCH", category:"Hombre"},
+  {name:"212VIPRoseCH", category:"Mujer"},
+  {name:"AcquaDiGioGiorgioArmani", category:"Hombre"},
+  {name:"AhliKarpos", category:"Mujer"},
+  {name:"AlluresSportChanel", category:"Hombre"},
+  {name:"AmberOudGoldAlHaramain", category:"Mujer"},
+  {name:"AquaDubai", category:"Unisex"},
+  {name:"ArtOfUniverse", category:"Unisex"},
+  {name:"AssadLataffa", category:"Hombre"},
+  {name:"AventusCreed", category:"Hombre"},
+  {name:"BadBoyCH", category:"Hombre"},
+  {name:"BhararaKing", category:"Hombre"},
+  {name:"BlueDeChanel", category:"Hombre"},
+  {name:"BurberryHer", category:"Mujer"},
+  {name:"CHMenCH", category:"Hombre"},
+  {name:"CKBe", category:"Unisex"},
+  {name:"CloudArianaGrande", category:"Mujer"},
+  {name:"ClubDeNuitArmaf", category:"Hombre"},
+  {name:"DelinaParfumsDeMarly", category:"Mujer"},
+  {name:"DevotionD&G", category:"Mujer"},
+  {name:"DubayChicolat", category:"Mujer"},
+  {name:"EclairEclear", category:"Unisex"},
+  {name:"EuphoriaCK", category:"Mujer"},
+  {name:"FameRabanne", category:"Mujer"},
+  {name:"GodOfFire", category:"Unisex"},
+  {name:"GoldFreshMoschino", category:"Mujer"},
+  {name:"GoodGirlCH", category:"Mujer"},
+  {name:"HugoBossNight", category:"Hombre"},
+  {name:"InvictusVictoryPacoRabanne", category:"Hombre"},
+  {name:"J'adoreDior", category:"Mujer"},
+  {name:"JoyDior", category:"Mujer"},
+  {name:"KhamrahAlHaramain", category:"Mujer"},
+  {name:"LaVieEstBelle", category:"Mujer"},
+  {name:"LacosteBlanca", category:"Hombre"},
+  {name:"LacosteNoir", category:"Hombre"},
+  {name:"LatafgaEclaire", category:"Mujer"},
+  {name:"LaytonParfumsDeMarly", category:"Hombre"},
+  {name:"LeBeauLeParfumJPG", category:"Hombre"},
+  {name:"LeMaleElixirJPG", category:"Hombre"},
+  {name:"LightBlueDG", category:"Mujer"},
+  {name:"Meow", category:"Mujer"},
+  {name:"MissDior", category:"Mujer"},
+  {name:"MontBlancExplorer", category:"Hombre"},
+  {name:"MontBlancLegend", category:"Hombre"},
+  {name:"NinaNinaRicci", category:"Mujer"},
+  {name:"NitroRed", category:"Hombre"},
+  {name:"NobleBlushLataffa", category:"Mujer"},
+  {name:"OdisseyChocolatDubay", category:"Unisex"},
+  {name:"OdysseyCandeeArmaf", category:"Unisex"},
+  {name:"OdysseyMandarin", category:"Hombre"},
+  {name:"OlympeaPacoRabanne", category:"Mujer"},
+  {name:"OmbreLeatherTomFord", category:"Hombre"},
+  {name:"OmniaAmathiste", category:"Mujer"},
+  {name:"OmniaCoralBvlgari", category:"Mujer"},
+  {name:"OneMillionPacoRabanne", category:"Hombre"},
+  {name:"OrienticaAmberRouge", category:"Unisex"},
+  {name:"PhantomPacoRabanne", category:"Hombre"},
+  {name:"PradaLunaRossa", category:"Hombre"},
+  {name:"RalphLauren", category:"Mujer"},
+  {name:"SauvageDior", category:"Hombre"},
+  {name:"ScandalMenlJPG", category:"Hombre"},
+  {name:"SiGiorgioArmani", category:"Mujer"},
+  {name:"SorbettoRossoEscada", category:"Mujer"},
+  {name:"SplashCoconutVictoriasSecret", category:"Mujer"},
+  {name:"StrongerWithYou", category:"Hombre"},
+  {name:"ThankUNextArianaGrande", category:"Mujer"},
+  {name:"TheOneDG", category:"Mujer"},
+  {name:"Toy2Moschino", category:"Mujer"},
+  {name:"ValentinoBornInRoma", category:"Hombre"},
+  {name:"YaraMoiLataffa", category:"Mujer"},
+  {name:"YaraRosadaLataffa", category:"Mujer"},
+  {name:"YumYumMoschino", category:"Mujer"},
+  {name:"ChancheEauFraicheChanel", category:"Mujer"},
+  {name:"ChancheEauTendreChanel", category:"Mujer"}
+];
 
-  const catalogoDiv = document.getElementById('catalogo');
-
-  // --- Función para mostrar perfumes ---
-  function mostrarPerfumes(lista){
-    catalogoDiv.innerHTML = "";
-    lista.forEach(p=>{
-      const card = document.createElement("div");
-      card.className = "perfume-card";
-      card.innerHTML = `
-        <h3>${p.nombre}</h3>
-        <p>${p.categoria}</p>
-        <button onclick="verPerfume('${encodeURIComponent(p.nombre)}')">Ver detalles</button>
-      `;
-      catalogoDiv.appendChild(card);
-    });
-  }
-
-  // --- Inicialmente mostrar todos ---
-  mostrarPerfumes(perfumes);
-
-  // --- Función de búsqueda ---
-  document.getElementById('search-btn').addEventListener('click', ()=>{
-    const query = document.getElementById('search-input').value.toLowerCase();
-    const resultados = perfumes.filter(p=>p.nombre.toLowerCase().includes(query));
-    if(resultados.length>0){
-      mostrarPerfumes(resultados);
-    } else {
-      catalogoDiv.innerHTML = "<p>No se encontró ningún perfume.</p>";
-    }
+function loadPerfumes() {
+  const grid = document.getElementById('perfumeGrid');
+  grid.innerHTML = '';
+  perfumes.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<h3>${p.name}</h3>`;
+    card.onclick = () => { window.location.href = `perfumes.html?perfume=${p.name}`; };
+    grid.appendChild(card);
   });
+}
 
-  // --- Función para abrir perfume ---
-  function verPerfume(nombre){
-    window.location.href = `perfumes.html?perfume=${nombre}`;
+function searchPerfume() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = perfumes.filter(p => p.name.toLowerCase().includes(input));
+  const grid = document.getElementById('perfumeGrid');
+  grid.innerHTML = '';
+  if(filtered.length > 0){
+    filtered.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h3>${p.name}</h3>`;
+      card.onclick = () => { window.location.href = `perfumes.html?perfume=${p.name}`; };
+      grid.appendChild(card);
+    });
+  } else {
+    grid.innerHTML = `<p style="text-align:center; grid-column: 1 / -1;">No se encontró el perfume</p>`;
   }
+}
+
+window.onload = loadPerfumes;
 </script>
 
 </body>
 </html>
-
