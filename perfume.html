@@ -1,85 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfume</title>
-<style>
-body { font-family:'Arial', sans-serif; margin:0; background:#f4f4f4; color:#333;}
-header { background:#6b5b95; color:white; padding:20px; text-align:center; }
-.container { max-width:900px; margin:20px auto; padding:20px; background:white; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-h1 { text-align:center; }
-img { width:250px; display:block; margin:0 auto 20px; border-radius:15px; }
-.descripcion { text-align:center; margin-bottom:20px; font-size:16px; color:#555;}
-.selector { display:flex; justify-content:center; gap:15px; margin-bottom:20px;}
-.selector button { padding:12px 20px; border-radius:12px; border:none; cursor:pointer; font-size:14px; transition:0.3s;}
-.selector button:hover { background:#ff5c5c; color:white;}
-#precio { text-align:center; font-size:20px; margin-bottom:20px;}
-.comprar { display:block; margin:0 auto; padding:15px 30px; background:#ff5c5c; color:white; border:none; border-radius:12px; font-size:16px; cursor:pointer;}
-.comprar:hover { background:#ff1c1c;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Nova Parfumes</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header>Nova Parfumes</header>
+  <main>
+    <h2>Catálogo de Perfumes</h2>
+    <div class="grid">
+      <!-- 🚨 Aquí están los 76 perfumes -->
+      <div class="card">
+        <img src="img/sauvage.jpg" alt="Sauvage">
+        <h3>Sauvage</h3>
+        <a href="perfume.html?id=sauvage" class="btn">Ver más</a>
+      </div>
 
-<header>
-<h1 id="nombre">Cargando...</h1>
-</header>
+      <div class="card">
+        <img src="img/stronger.jpg" alt="Stronger With You">
+        <h3>Stronger With You</h3>
+        <a href="perfume.html?id=stronger" class="btn">Ver más</a>
+      </div>
 
-<div class="container">
-<img id="imagen" src="" alt="">
-<p class="descripcion" id="descripcion"></p>
+      <div class="card">
+        <img src="img/missdior.jpg" alt="Miss Dior">
+        <h3>Miss Dior</h3>
+        <a href="perfume.html?id=missdior" class="btn">Ver más</a>
+      </div>
 
-<div class="selector" id="selector"></div>
-
-<div id="precio">Selecciona un tamaño</div>
-
-<button class="comprar" onclick="agregarCarrito()">Añadir al carrito</button>
-</div>
-
-<script>
-const perfumes = {
-"sauvage": {nombre:"Sauvage Dior", imagen:"img/sauvage.jpg", descripcion:"Fresco y elegante, ideal para cualquier ocasión.", precios:{30:33000,50:45000,110:90000}},
-"acqua-di-gio": {nombre:"Acqua di Gio", imagen:"img/acqua-di-gio.jpg", descripcion:"Muy fresco, excelente para días calurosos y actividad física.", precios:{30:33000,50:45000,110:90000}},
-"miss-dior": {nombre:"Miss Dior", imagen:"img/miss-dior.jpg", descripcion:"Dulce y femenino, perfecto para eventos especiales.", precios:{30:33000,50:45000,110:90000}},
-"212-vip": {nombre:"212 VIP", imagen:"img/212-vip.jpg", descripcion:"Juvenil y energético, ideal para la noche.", precios:{30:33000,50:45000,110:90000}},
-"creed-aventus": {nombre:"Creed Aventus", imagen:"img/creed-aventus.jpg", descripcion:"Un clásico masculino con notas afrutadas y ahumadas.", precios:{30:33000,50:45000,110:90000}},
-// 👉 Aquí pegas los 76 perfumes (cada uno con id único, nombre, imagen y descripción)
-};
-
-const params = new URLSearchParams(window.location.search);
-const id = params.get('perfume');
-let precioSeleccionado = 0;
-
-if(perfumes[id]){
-    const p = perfumes[id];
-    document.getElementById("nombre").innerText = p.nombre;
-    document.getElementById("imagen").src = p.imagen;
-    document.getElementById("descripcion").innerText = p.descripcion;
-    
-    const selector = document.getElementById("selector");
-    for (let size in p.precios){
-        const btn = document.createElement("button");
-        btn.innerText = `${size} ml - ${p.precios[size].toLocaleString()} COP`;
-        btn.onclick = () => seleccionarPrecio(p.precios[size]);
-        selector.appendChild(btn);
-    }
-} else {
-    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Perfume no encontrado</h2>";
-}
-
-function seleccionarPrecio(precio){
-    precioSeleccionado = precio;
-    document.getElementById("precio").innerText = "Precio: " + precio.toLocaleString() + " COP";
-}
-
-function agregarCarrito(){
-    if(precioSeleccionado===0){ alert("Selecciona un tamaño primero."); return;}
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push({id:id, nombre:perfumes[id].nombre, precio:precioSeleccionado});
-    localStorage.setItem('cart', JSON.stringify(cart));
-    window.location.href = "checkout.html";
-}
-</script>
-
+      <!-- ... Se repite para todos los perfumes (yo te paso el listado completo en JSON para no escribir 76 a mano) -->
+    </div>
+  </main>
 </body>
 </html>
