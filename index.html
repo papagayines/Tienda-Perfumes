@@ -1,52 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tienda de Perfumes</title>
-<style>
-body { font-family:'Arial', sans-serif; margin:0; background:#f4f4f4; color:#333;}
-header { background:#6b5b95; color:white; padding:20px; text-align:center; }
-.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:15px; max-width:1200px; margin:20px auto;}
-.card { background:white; border-radius:12px; text-align:center; padding:10px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer;}
-.card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1);}
-.card img { width:100%; border-radius:12px; height:150px; object-fit:cover;}
-input[type=text]{display:block; margin:0 auto 20px; padding:12px; width:80%; border-radius:12px; border:1px solid #ccc; font-size:16px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Perfumes</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><h1>Tienda de Perfumes</h1></header>
-<input type="text" id="busqueda" placeholder="Busca un perfume..." oninput="filtrar()">
-<div class="grid" id="catalogo"></div>
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">Nova Perfumes</h1>
+      <ul>
+        <li><a href="index.html" class="active">Inicio</a></li>
+        <li><a href="perfumes.html">Perfumes</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<script>
-const perfumes = [
- {id:"sauvage", nombre:"Sauvage Dior", imagen:"img/sauvage.jpg"},
- {id:"acqua-di-gio", nombre:"Acqua di Gio", imagen:"img/acqua-di-gio.jpg"},
- {id:"miss-dior", nombre:"Miss Dior", imagen:"img/miss-dior.jpg"},
- {id:"212-vip", nombre:"212 VIP", imagen:"img/212-vip.jpg"},
- {id:"creed-aventus", nombre:"Creed Aventus", imagen:"img/creed-aventus.jpg"},
- // 👉 Mete aquí los 76 perfumes con su id, nombre e imagen
-];
+  <section class="hero">
+    <h2>El arte del perfume</h2>
+    <p>Descubre fragancias exclusivas para hombre y mujer, con notas únicas que despiertan emociones.</p>
+    <a href="perfumes.html" class="btn">Ver catálogo</a>
+  </section>
 
-function mostrar(perfumesMostrar){
-    const catalogo = document.getElementById('catalogo');
-    catalogo.innerHTML="";
-    perfumesMostrar.forEach(p=>{
-        const div = document.createElement('div');
-        div.className="card";
-        div.onclick=()=>{window.location.href=`perfume.html?perfume=${p.id}`};
-        div.innerHTML=`<img src="${p.imagen}" alt="${p.nombre}"><h3>${p.nombre}</h3>`;
-        catalogo.appendChild(div);
-    });
-}
-
-function filtrar(){
-    const term = document.getElementById('busqueda').value.toLowerCase();
-    mostrar(perfumes.filter(p=>p.nombre.toLowerCase().includes(term)));
-}
-
-mostrar(perfumes);
-</script>
+  <footer>
+    <p>© 2025 Nova Perfumes. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
+
