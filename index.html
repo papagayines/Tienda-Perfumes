@@ -10,12 +10,13 @@ header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
 header h1 { margin:0; }
 section { padding:40px 20px; max-width:1200px; margin:0 auto; }
 h2 { color:#563d7c; margin-bottom:20px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+.grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
 .card { background:#fff; border-radius:12px; text-align:center; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; }
 .card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-.card img { max-width:100%; border-radius:12px; height:180px; object-fit:cover; }
 .card h3 { margin-top:10px; font-size:1em; color:#6b5b95; }
 footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; color:#fff; }
+@media(max-width:900px) {.grid {grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px) {.grid {grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -24,100 +25,27 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 <h1>Tienda de Perfumes</h1>
 </header>
 
-<!-- Sección: Hombre -->
-<section id="hombre">
-<h2>Perfumes de Hombre</h2>
+<section id="perfumes">
+<h2>Perfumes</h2>
 <div class="grid">
-<a href="perfumes/sauvage.html" class="card"><img src="img/sauvage.jpg" alt="Sauvage"><h3>Sauvage</h3></a>
-<a href="perfumes/stronger.html" class="card"><img src="img/stronger.jpg" alt="Stronger with You"><h3>Stronger with You</h3></a>
-<a href="perfumes/nitro-red.html" class="card"><img src="img/nitro-red.jpg" alt="Nitro Red"><h3>Nitro Red</h3></a>
-<a href="perfumes/mont-blanc-explorer.html" class="card"><img src="img/mont-blanc-explorer.jpg" alt="Mont Blanc Explorer"><h3>Mont Blanc Explorer</h3></a>
-<a href="perfumes/creed-adventus.html" class="card"><img src="img/creed-adventus.jpg" alt="Creed Adventus"><h3>Creed Adventus</h3></a>
-<a href="perfumes/layton.html" class="card"><img src="img/layton.jpg" alt="Layton"><h3>Layton</h3></a>
-<a href="perfumes/ombre-leather.html" class="card"><img src="img/ombre-leather.jpg" alt="Ombre Leather"><h3>Ombre Leather</h3></a>
-<a href="perfumes/lacoste-noir.html" class="card"><img src="img/lacoste-noir.jpg" alt="Lacoste Noir"><h3>Lacoste Noir</h3></a>
-<a href="perfumes/club-de-nuit.html" class="card"><img src="img/club-de-nuit.jpg" alt="Club de Nuit"><h3>Club de Nuit</h3></a>
-<a href="perfumes/bad-boy.html" class="card"><img src="img/bad-boy.jpg" alt="Bad Boy"><h3>Bad Boy</h3></a>
-<a href="perfumes/9-pm.html" class="card"><img src="img/9-pm.jpg" alt="9 PM"><h3>9 PM</h3></a>
-<a href="perfumes/hugo-boss-night.html" class="card"><img src="img/hugo-boss-night.jpg" alt="Hugo Boss Night"><h3>Hugo Boss Night</h3></a>
-<a href="perfumes/one-millon.html" class="card"><img src="img/one-millon.jpg" alt="One Millon"><h3>One Millon</h3></a>
-<a href="perfumes/ch-men.html" class="card"><img src="img/ch-men.jpg" alt="CH Men"><h3>CH Men</h3></a>
-<a href="perfumes/assad.html" class="card"><img src="img/assad.jpg" alt="Assad"><h3>Assad</h3></a>
-<a href="perfumes/invictus-victory.html" class="card"><img src="img/invictus-victory.jpg" alt="Invictus Victory"><h3>Invictus Victory</h3></a>
-<a href="perfumes/lacoste-blanca.html" class="card"><img src="img/lacoste-blanca.jpg" alt="Lacoste Blanca"><h3>Lacoste Blanca</h3></a>
-<a href="perfumes/212-vip-black.html" class="card"><img src="img/212-vip-black.jpg" alt="212 VIP Black"><h3>212 VIP Black</h3></a>
-<a href="perfumes/212-nyc.html" class="card"><img src="img/212-nyc.jpg" alt="212 NYC"><h3>212 NYC</h3></a>
-<a href="perfumes/bleu-chanel.html" class="card"><img src="img/bleu-chanel.jpg" alt="Bleu Chanel"><h3>Bleu Chanel</h3></a>
-<a href="perfumes/ck-be.html" class="card"><img src="img/ck-be.jpg" alt="CK Be"><h3>CK Be</h3></a>
-<a href="perfumes/allure-sport.html" class="card"><img src="img/allure-sport.jpg" alt="Allure Sport"><h3>Allure Sport</h3></a>
-<a href="perfumes/scandal-men.html" class="card"><img src="img/scandal-men.jpg" alt="Scandal Men"><h3>Scandal Men</h3></a>
-<a href="perfumes/odyssey-mandarin.html" class="card"><img src="img/odyssey-mandarin.jpg" alt="Odyssey Mandarin"><h3>Odyssey Mandarin</h3></a>
-<a href="perfumes/acqua-di-gio.html" class="card"><img src="img/acqua-di-gio.jpg" alt="Acqua di Gio"><h3>Acqua di Gio</h3></a>
-<a href="perfumes/art-of-universe.html" class="card"><img src="img/art-of-universe.jpg" alt="Art of Universe"><h3>Art of Universe</h3></a>
-<a href="perfumes/prada-luna-rosa.html" class="card"><img src="img/prada-luna-rosa.jpg" alt="Prada Luna Rosa"><h3>Prada Luna Rosa</h3></a>
-<a href="perfumes/valentino-born-in-roma.html" class="card"><img src="img/valentino-born-in-roma.jpg" alt="Valentino Born in Roma"><h3>Valentino Born in Roma</h3></a>
-<a href="perfumes/khamrah.html" class="card"><img src="img/khamrah.jpg" alt="Khamrah"><h3>Khamrah</h3></a>
-<a href="perfumes/le-beau-le-parfum.html" class="card"><img src="img/le-beau-le-parfum.jpg" alt="Le Beau Le Parfum"><h3>Le Beau Le Parfum</h3></a>
-<a href="perfumes/le-male-elixir.html" class="card"><img src="img/le-male-elixir.jpg" alt="Le Male Elixir"><h3>Le Male Elixir</h3></a>
-<a href="perfumes/mont-blanc-legend.html" class="card"><img src="img/mont-blanc-legend.jpg" alt="Mont Blanc Legend"><h3>Mont Blanc Legend</h3></a>
-<a href="perfumes/phantom.html" class="card"><img src="img/phantom.jpg" alt="Phantom"><h3>Phantom</h3></a>
-<a href="perfumes/bharara-king.html" class="card"><img src="img/bharara-king.jpg" alt="Bharara King"><h3>Bharara King</h3></a>
-</div>
-</section>
 
-<!-- Sección: Mujer -->
-<section id="mujer">
-<h2>Perfumes de Mujer</h2>
-<div class="grid">
-<a href="perfumes/miss-dior.html" class="card"><img src="img/miss-dior.jpg" alt="Miss Dior"><h3>Miss Dior</h3></a>
-<a href="perfumes/chance-eau-tendre.html" class="card"><img src="img/chance-eau-tendre.jpg" alt="Chance Eau Tendre"><h3>Chance Eau Tendre</h3></a>
-<a href="perfumes/chance-eau-fraiche.html" class="card"><img src="img/chance-eau-fraiche.jpg" alt="Chance Eau Fraiche"><h3>Chance Eau Fraiche</h3></a>
-<a href="perfumes/thanku-next.html" class="card"><img src="img/thanku-next.jpg" alt="Thanku Next"><h3>Thanku Next</h3></a>
-<a href="perfumes/the-one.html" class="card"><img src="img/the-one.jpg" alt="The One"><h3>The One</h3></a>
-<a href="perfumes/splash-coconut.html" class="card"><img src="img/splash-coconut.jpg" alt="Splash Coconut"><h3>Splash Coconut</h3></a>
-<a href="perfumes/ahli-karpos.html" class="card"><img src="img/ahli-karpos.jpg" alt="Ahli Karpos"><h3>Ahli Karpos</h3></a>
-<a href="perfumes/fame.html" class="card"><img src="img/fame.jpg" alt="Fame"><h3>Fame</h3></a>
-<a href="perfumes/omnia-amathiste.html" class="card"><img src="img/omnia-amathiste.jpg" alt="Omnia Amathiste"><h3>Omnia Amathiste</h3></a>
-<a href="perfumes/latafga-eclaire.html" class="card"><img src="img/latafga-eclaire.jpg" alt="Latafga Eclaire"><h3>Latafga Eclaire</h3></a>
-<a href="perfumes/meow.html" class="card"><img src="img/meow.jpg" alt="Meow"><h3>Meow</h3></a>
-<a href="perfumes/joy-by-dior.html" class="card"><img src="img/joy-by-dior.jpg" alt="Joy by Dior"><h3>Joy by Dior</h3></a>
-<a href="perfumes/yum-yum.html" class="card"><img src="img/yum-yum.jpg" alt="Yum Yum"><h3>Yum Yum</h3></a>
-<a href="perfumes/ralph-lauren.html" class="card"><img src="img/ralph-lauren.jpg" alt="Ralph Lauren"><h3>Ralph Lauren</h3></a>
-<a href="perfumes/omnia-coral.html" class="card"><img src="img/omnia-coral.jpg" alt="Omnia Coral"><h3>Omnia Coral</h3></a>
-<a href="perfumes/dubay-chocolat.html" class="card"><img src="img/dubay-chocolat.jpg" alt="Dubay Chocolat"><h3>Dubay Chocolat</h3></a>
-<a href="perfumes/odyssey-candee.html" class="card"><img src="img/odyssey-candee.jpg" alt="Odyssey Candee"><h3>Odyssey Candee</h3></a>
-<a href="perfumes/j-adore.html" class="card"><img src="img/j-adore.jpg" alt="J Adore"><h3>J Adore</h3></a>
-<a href="perfumes/gold-fresh.html" class="card"><img src="img/gold-fresh.jpg" alt="Gold Fresh"><h3>Gold Fresh</h3></a>
-<a href="perfumes/yara-rosada.html" class="card"><img src="img/yara-rosada.jpg" alt="Yara Rosada"><h3>Yara Rosada</h3></a>
-<a href="perfumes/devotion.html" class="card"><img src="img/devotion.jpg" alt="Devotion"><h3>Devotion</h3></a>
-<a href="perfumes/212-vip.html" class="card"><img src="img/212-vip.jpg" alt="212 VIP"><h3>212 VIP</h3></a>
-<a href="perfumes/light-blue.html" class="card"><img src="img/light-blue.jpg" alt="Light Blue"><h3>Light Blue</h3></a>
-<a href="perfumes/212-vip-rose.html" class="card"><img src="img/212-vip-rose.jpg" alt="212 VIP Rose"><h3>212 VIP Rose</h3></a>
-<a href="perfumes/cloud-ariana-grande.html" class="card"><img src="img/cloud-ariana-grande.jpg" alt="Cloud Ariana Grande"><h3>Cloud Ariana Grande</h3></a>
-<a href="perfumes/good-girl.html" class="card"><img src="img/good-girl.jpg" alt="Good Girl"><h3>Good Girl</h3></a>
-<a href="perfumes/amber-oud-gold.html" class="card"><img src="img/amber-oud-gold.jpg" alt="Amber Oud Gold"><h3>Amber Oud Gold</h3></a>
-<a href="perfumes/sorbeto-rosso.html" class="card"><img src="img/sorbeto-rosso.jpg" alt="Sorbeto Rosso"><h3>Sorbeto Rosso</h3></a>
-<a href="perfumes/moshino-toy-2.html" class="card"><img src="img/moshino-toy-2.jpg" alt="Moshino Toy 2"><h3>Moshino Toy 2</h3></a>
-<a href="perfumes/olympea.html" class="card"><img src="img/olympea.jpg" alt="Olympea"><h3>Olympea</h3></a>
-<a href="perfumes/la-vida-es-bella.html" class="card"><img src="img/la-vida-es-bella.jpg" alt="La Vida es Bella"><h3>La Vida es Bella</h3></a>
-<a href="perfumes/burberry-her.html" class="card"><img src="img/burberry-her.jpg" alt="Burberry Her"><h3>Burberry Her</h3></a>
-<a href="perfumes/noble-blus.html" class="card"><img src="img/noble-blus.jpg" alt="Noble Blus"><h3>Noble Blus</h3></a>
-<a href="perfumes/deline.html" class="card"><img src="img/deline.jpg" alt="Deline"><h3>Deline</h3></a>
-</div>
-</section>
+<a href="perfumes/9PMCH.html" class="card"><h3>9 PM</h3></a>
+<a href="perfumes/212NYCCH.html" class="card"><h3>212 NYC</h3></a>
+<a href="perfumes/212VIPBlackCH.html" class="card"><h3>212 VIP Black</h3></a>
+<a href="perfumes/212VIPRoseCH.html" class="card"><h3>212 VIP Rose</h3></a>
 
-<!-- Sección: Unisex -->
-<section id="unisex">
-<h2>Perfumes Unisex</h2>
-<div class="grid">
-<a href="perfumes/orientica-amber-rouge.html" class="card"><img src="img/orientica-amber-rouge.jpg" alt="Orientica Amber Rouge"><h3>Orientica Amber Rouge</h3></a>
-<a href="perfumes/god-of-fire.html" class="card"><img src="img/god-of-fire.jpg" alt="God of Fire"><h3>God of Fire</h3></a>
-<a href="perfumes/aqua-dubai.html" class="card"><img src="img/aqua-dubai.jpg" alt="Aqua Dubai"><h3>Aqua Dubai</h3></a>
-<a href="perfumes/art-of-universe.html" class="card"><img src="img/art-of-universe.jpg" alt="Art of Universe"><h3>Art of Universe</h3></a>
-<a href="perfumes/luna-rossa.html" class="card"><img src="img/luna-rossa.jpg" alt="Luna Rossa"><h3>Luna Rossa</h3></a>
-<a href="perfumes/odyssey-candee.html" class="card"><img src="img/odyssey-candee.jpg" alt="Odyssey Candee"><h3>Odyssey Candee</h3></a>
-<a href="perfumes/odyssey-chocolat-dubay.html" class="card"><img src="img/odyssey-chocolat-dubay.jpg" alt="Odyssey Chocolat Dubay"><h3>Odyssey Chocolat Dubay</h3></a>
-<a href="perfumes/eclair.html" class="card"><img src="img/eclair.jpg" alt="Eclair"><h3>Eclair</h3></a>
+<a href="perfumes/AcquaDiGioGiorgioArmani.html" class="card"><h3>Acqua Di Gio Giorgio Armani</h3></a>
+<a href="perfumes/AhliKarpos.html" class="card"><h3>Ahli Karpos</h3></a>
+<a href="perfumes/AlluresSportChanel.html" class="card"><h3>Allure Sport Chanel</h3></a>
+<a href="perfumes/AmberOudGoldAlHaramain.html" class="card"><h3>Amber Oud Gold Al Haramain</h3></a>
+
+<a href="perfumes/AquaDubai-unisex.html" class="card"><h3>Aqua Dubai</h3></a>
+<a href="perfumes/ArtOfUniverse.html" class="card"><h3>Art Of Universe</h3></a>
+<a href="perfumes/AssadLataffa.html" class="card"><h3>Assad Lataffa</h3></a>
+<a href="perfumes/AventusCreed.html" class="card"><h3>Aventus Creed</h3></a>
+
+<!-- Continúa con los demás perfumes -->
+
 </div>
 </section>
 
@@ -125,4 +53,3 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 
 </body>
 </html>
-
