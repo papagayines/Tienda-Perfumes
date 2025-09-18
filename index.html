@@ -4,26 +4,200 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova Parfumes</title>
-<link rel="stylesheet" href="style.css">
+<style>
+  /* --- Reset y tipografía --- */
+  body, h1, h2, h3, p { margin:0; padding:0; }
+  body { font-family:'Poppins', sans-serif; background:#fdfcfb; color:#333; line-height:1.6; }
+  a { text-decoration:none; color:inherit; }
+
+  /* --- Header --- */
+  header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
+  header h1 { font-size:2em; }
+
+  /* --- Secciones --- */
+  section { padding:30px 20px; max-width:1200px; margin:0 auto; }
+  h2 { color:#563d7c; margin-bottom:20px; font-size:1.5em; }
+
+  /* --- Buscador --- */
+  #search-bar { width:100%; padding:12px 15px; border-radius:12px; border:1px solid #ccc; margin-bottom:30px; font-size:1em; }
+
+  /* --- Grid de perfumes --- */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+  .card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.08); transition:0.3s; }
+  .card:hover { box-shadow:0 6px 25px rgba(0,0,0,0.12); }
+  .card h3 { margin-bottom:10px; color:#6b5b95; font-size:1.2em; }
+  .card p { font-size:0.9em; color:#555; margin-bottom:15px; }
+
+  /* --- Selector de tamaño y precio --- */
+  .sizes button { margin-right:8px; padding:8px 12px; border:none; border-radius:8px; background:#563d7c; color:#fff; cursor:pointer; transition:0.3s; }
+  .sizes button:hover { background:#6b5b95; }
+
+  /* --- Botón añadir al carrito --- */
+  .add-cart { display:block; margin-top:10px; padding:10px 15px; background:#ff7f50; color:#fff; border:none; border-radius:12px; cursor:pointer; transition:0.3s; }
+  .add-cart:hover { background:#ff6333; }
+
+  /* --- Carrito flotante --- */
+  #cart { position:fixed; top:80px; right:20px; background:#fff; border-radius:12px; width:300px; max-height:400px; overflow-y:auto; box-shadow:0 4px 20px rgba(0,0,0,0.2); padding:15px; display:none; z-index:1000; }
+  #cart h3 { margin-bottom:15px; color:#6b5b95; }
+  #cart ul { list-style:none; padding:0; }
+  #cart li { display:flex; justify-content:space-between; margin-bottom:10px; }
+  #cart button { background:#ff7f50; border:none; border-radius:8px; color:#fff; padding:4px 8px; cursor:pointer; }
+  #cart-total { font-weight:bold; margin-top:15px; }
+
+  /* --- Botón mostrar carrito --- */
+  #show-cart { position:fixed; top:20px; right:20px; padding:10px 15px; border:none; border-radius:12px; background:#ff7f50; color:#fff; cursor:pointer; z-index:1001; }
+
+  /* --- Responsive --- */
+  @media(max-width:600px){
+    .grid { grid-template-columns:1fr; }
+    #cart { width:90%; right:5%; }
+  }
+</style>
 </head>
 <body>
 
 <header>
-  <h1>Nova Parfumes</h1>
-  <nav>
-    <a href="perfumes.html">Catálogo</a>
-  </nav>
+<h1>Nova Parfumes</h1>
+<input type="text" id="search-bar" placeholder="Busca un perfume...">
 </header>
 
-<section class="hero">
-  <h2>Bienvenido a Nova Parfumes</h2>
-  <p>Descubre nuestra selección de 76 perfumes exclusivos. Hombre, mujer y unisex.</p>
-  <a class="btn" href="perfumes.html">Ver catálogo completo</a>
+<!-- Sección de perfumes -->
+<section id="catalog">
+<h2>Catálogo de Perfumes</h2>
+<div class="grid" id="perfume-grid">
+  <!-- Aquí se inyectan las fichas de los perfumes -->
+</div>
 </section>
 
-<footer>
-  &copy; 2025 Nova Parfumes
-</footer>
+<!-- Botón carrito -->
+<button id="show-cart">Carrito 🛒</button>
 
+<!-- Carrito -->
+<div id="cart">
+<h3>Tu Carrito</h3>
+<ul id="cart-items"></ul>
+<p id="cart-total">Total: $0</p>
+<button id="checkout">Finalizar Compra</button>
+</div>
+
+<script>
+  // --- Datos de los perfumes ---
+  const perfumes = [
+    {
+      nombre:"Acqua Di Gio",
+      categoria:"Hombre",
+      descripcion:"Un perfume muy fresco, ideal para días calurosos o de actividad física intensa.",
+      notas:{ salida:"Cítricos", corazon:"Jazmín y Neroli", fondo:"Madera y Almizcle" },
+      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
+    },
+    {
+      nombre:"Miss Dior",
+      categoria:"Mujer",
+      descripcion:"Elegante y floral, perfecta para ocasiones especiales o románticas.",
+      notas:{ salida:"Mandarina y Bergamota", corazon:"Rosa y Jazmín", fondo:"Madera y Pachuli" },
+      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
+    },
+    {
+      nombre:"God Of Fire",
+      categoria:"Unisex",
+      descripcion:"Aromas intensos y especiados, ideal para noches especiales.",
+      notas:{ salida:"Bergamota y Pimienta", corazon:"Cardamomo y Sándalo", fondo:"Ámbar y Vainilla" },
+      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
+    }
+    // ... Agregar los 76 perfumes de manera similar
+  ];
+
+  const perfumeGrid = document.getElementById("perfume-grid");
+  const cart = document.getElementById("cart");
+  const showCartBtn = document.getElementById("show-cart");
+  const cartItems = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
+  const checkoutBtn = document.getElementById("checkout");
+
+  let carrito = [];
+
+  // --- Función para mostrar perfumes ---
+  function mostrarPerfumes(filtrados){
+    perfumeGrid.innerHTML="";
+    filtrados.forEach(perfume=>{
+      const card = document.createElement("div");
+      card.className="card";
+      card.innerHTML=`
+        <h3>${perfume.nombre}</h3>
+        <p>${perfume.descripcion}</p>
+        <p><strong>Notas:</strong> Salida: ${perfume.notas.salida}, Corazón: ${perfume.notas.corazon}, Fondo: ${perfume.notas.fondo}</p>
+        <div class="sizes">
+          <button onclick="agregarAlCarrito('${perfume.nombre}','30ml',${perfume.precios["30ml"]})">30ml - $${perfume.precios["30ml"]}</button>
+          <button onclick="agregarAlCarrito('${perfume.nombre}','50ml',${perfume.precios["50ml"]})">50ml - $${perfume.precios["50ml"]}</button>
+          <button onclick="agregarAlCarrito('${perfume.nombre}','110ml',${perfume.precios["110ml"]})">110ml - $${perfume.precios["110ml"]}</button>
+        </div>
+      `;
+      perfumeGrid.appendChild(card);
+    });
+  }
+
+  // --- Mostrar todos al inicio ---
+  mostrarPerfumes(perfumes);
+
+  // --- Buscador ---
+  const searchBar = document.getElementById("search-bar");
+  searchBar.addEventListener("input",()=>{
+    const term = searchBar.value.toLowerCase();
+    const filtrados = perfumes.filter(p=>p.nombre.toLowerCase().includes(term));
+    mostrarPerfumes(filtrados);
+  });
+
+  // --- Carrito ---
+  showCartBtn.addEventListener("click",()=>{
+    cart.style.display = cart.style.display==="block"?"none":"block";
+  });
+
+  function agregarAlCarrito(nombre, size, precio){
+    const itemIndex = carrito.findIndex(i=>i.nombre===nombre && i.size===size);
+    if(itemIndex>-1){
+      carrito[itemIndex].cantidad++;
+    }else{
+      carrito.push({nombre,size,precio,cantidad:1});
+    }
+    actualizarCarrito();
+  }
+
+  function actualizarCarrito(){
+    cartItems.innerHTML="";
+    let total = 0;
+    carrito.forEach(item=>{
+      total += item.precio * item.cantidad;
+      const li = document.createElement("li");
+      li.innerHTML=`${item.nombre} (${item.size}) x ${item.cantidad} - $${item.precio*item.cantidad} <button onclick="quitarDelCarrito('${item.nombre}','${item.size}')">❌</button>`;
+      cartItems.appendChild(li);
+    });
+    cartTotal.textContent="Total: $"+total;
+  }
+
+  function quitarDelCarrito(nombre,size){
+    const index = carrito.findIndex(i=>i.nombre===nombre && i.size===size);
+    if(index>-1){
+      carrito.splice(index,1);
+      actualizarCarrito();
+    }
+  }
+
+  // --- Finalizar compra ---
+  checkoutBtn.addEventListener("click",()=>{
+    if(carrito.length===0){ alert("Tu carrito está vacío"); return; }
+    let detalles="";
+    carrito.forEach(i=>detalles+=`${i.nombre} (${i.size}) x ${i.cantidad} - $${i.precio*i.cantidad}\n`);
+    const nombreCliente = prompt("Nombre:");
+    const contacto = prompt("Número o correo de contacto:");
+    const direccion = prompt("Dirección de entrega:");
+    const metodoPago = prompt("Método de pago: Nequi, Tranfiya o Efectivo");
+    alert(`Pedido enviado:\n${detalles}\nCliente: ${nombreCliente}\nContacto: ${contacto}\nDirección: ${direccion}\nPago: ${metodoPago}\n\n¡Gracias por tu compra!`);
+
+    // Aquí podrías agregar envío de correo usando EmailJS u otro servicio
+    carrito=[];
+    actualizarCarrito();
+  });
+
+</script>
 </body>
 </html>
