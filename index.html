@@ -25,14 +25,84 @@ button { margin-top:5px; padding:5px 10px; border:none; border-radius:5px; backg
 <script>
 (function(){emailjs.init("user_4zsh227");})();
 
-// Lista de perfumes con precios de sus carpetas (ejemplo, debes completar los 76)
+// Lista de los 76 perfumes con precio, género y categoría
 let perfumes = [
-  {name:"Sauvage", price:120, gender:"Hombre", category:"Amaderado"},
-  {name:"212 VIP", price:150, gender:"Hombre", category:"Dulce"},
-  {name:"Miss Dior", price:130, gender:"Mujer", category:"Floral"},
-  {name:"Good Girl", price:140, gender:"Mujer", category:"Dulce"},
-  {name:"God Of Fire", price:160, gender:"Unisex", category:"Oriental"},
-  // Completar los 76 perfumes aquí
+  {name:"SauvageDior", price:120, gender:"Hombre", category:"Amaderado"},
+  {name:"StrongerWithYou", price:130, gender:"Hombre", category:"Dulce"},
+  {name:"NitroRed", price:140, gender:"Hombre", category:"Cítrico"},
+  {name:"MontBlancExplorer", price:150, gender:"Hombre", category:"Amaderado"},
+  {name:"AventusCreed", price:180, gender:"Hombre", category:"Amaderado"},
+  {name:"BadBoyCH", price:125, gender:"Hombre", category:"Dulce"},
+  {name:"BhararaKing", price:160, gender:"Hombre", category:"Amaderado"},
+  {name:"BlueDeChanel", price:155, gender:"Hombre", category:"Cítrico"},
+  {name:"CHMenCH", price:130, gender:"Hombre", category:"Amaderado"},
+  {name:"CKBe", price:120, gender:"Hombre", category:"Fresco"},
+  {name:"ClubDeNuitArmaf", price:140, gender:"Hombre", category:"Amaderado"},
+  {name:"DelinaParfumsDeMarly", price:170, gender:"Mujer", category:"Floral"},
+  {name:"DevotionD&G", price:145, gender:"Mujer", category:"Dulce"},
+  {name:"DubayChicolat", price:135, gender:"Mujer", category:"Dulce"},
+  {name:"EclairEclear", price:125, gender:"Unisex", category:"Dulce"},
+  {name:"EuphoriaCK", price:140, gender:"Mujer", category:"Oriental"},
+  {name:"FameRabanne", price:150, gender:"Mujer", category:"Dulce"},
+  {name:"GodOfFire", price:160, gender:"Unisex", category:"Oriental"},
+  {name:"GoldFreshMoschino", price:130, gender:"Mujer", category:"Dulce"},
+  {name:"GoodGirlCH", price:140, gender:"Mujer", category:"Dulce"},
+  {name:"HugoBossNight", price:150, gender:"Hombre", category:"Amaderado"},
+  {name:"InvictusVictoryPacoRabanne", price:155, gender:"Hombre", category:"Dulce"},
+  {name:"J'adoreDior", price:160, gender:"Mujer", category:"Floral"},
+  {name:"JoyDior", price:140, gender:"Mujer", category:"Floral"},
+  {name:"KhamrahAlHaramain", price:135, gender:"Mujer", category:"Dulce"},
+  {name:"La Vie Est Belle", price:150, gender:"Mujer", category:"Dulce"},
+  {name:"LacosteBlanca", price:120, gender:"Hombre", category:"Fresco"},
+  {name:"LacosteNoir", price:125, gender:"Hombre", category:"Amaderado"},
+  {name:"LatafgaEclaire", price:130, gender:"Mujer", category:"Dulce"},
+  {name:"LaytonParfumsDeMarly", price:170, gender:"Hombre", category:"Amaderado"},
+  {name:"LeBeauLeParfumJPG", price:145, gender:"Hombre", category:"Dulce"},
+  {name:"LeMaleElixirJPG", price:135, gender:"Hombre", category:"Dulce"},
+  {name:"LightBlue D&G", price:140, gender:"Mujer", category:"Fresco"},
+  {name:"Meow", price:120, gender:"Mujer", category:"Dulce"},
+  {name:"MissDior", price:150, gender:"Mujer", category:"Floral"},
+  {name:"MontBlancLegend", price:155, gender:"Hombre", category:"Amaderado"},
+  {name:"NinaNinaRicci", price:140, gender:"Mujer", category:"Floral"},
+  {name:"NitroRed", price:140, gender:"Hombre", category:"Cítrico"},
+  {name:"NobleBlushLataffa", price:135, gender:"Mujer", category:"Dulce"},
+  {name:"OdisseyChocolatDubay", price:150, gender:"Unisex", category:"Dulce"},
+  {name:"OdysseyCandeeArmaf", price:130, gender:"Unisex", category:"Dulce"},
+  {name:"OdysseyMandarin", price:145, gender:"Hombre", category:"Cítrico"},
+  {name:"OlympeaPacoRabanne", price:160, gender:"Mujer", category:"Dulce"},
+  {name:"OmbreLeatherTomFord", price:155, gender:"Hombre", category:"Amaderado"},
+  {name:"OmniaAmathiste", price:140, gender:"Mujer", category:"Floral"},
+  {name:"OmniaCoralBvlgari", price:135, gender:"Mujer", category:"Floral"},
+  {name:"OneMillionPacoRabanne", price:150, gender:"Hombre", category:"Dulce"},
+  {name:"OrienticaAmberRouge", price:160, gender:"Unisex", category:"Oriental"},
+  {name:"PhantomPacoRabanne", price:140, gender:"Hombre", category:"Dulce"},
+  {name:"PradaLunaRossa", price:145, gender:"Hombre", category:"Amaderado"},
+  {name:"RalphLauren", price:130, gender:"Mujer", category:"Floral"},
+  {name:"SauvageDior", price:150, gender:"Hombre", category:"Amaderado"},
+  {name:"ScandalMenlJPG", price:140, gender:"Hombre", category:"Dulce"},
+  {name:"SiGiorgioArmani", price:155, gender:"Mujer", category:"Floral"},
+  {name:"SorbettoRossoEscada", price:135, gender:"Mujer", category:"Dulce"},
+  {name:"SplashCoconutVictoria'sSecret", price:130, gender:"Mujer", category:"Fresco"},
+  {name:"ThankUNextArianaGrande", price:140, gender:"Mujer", category:"Dulce"},
+  {name:"TheOneD&G", price:150, gender:"Hombre", category:"Amaderado"},
+  {name:"Toy2Moschino", price:130, gender:"Mujer", category:"Dulce"},
+  {name:"ValentinoBornInRoma", price:155, gender:"Mujer", category:"Floral"},
+  {name:"YaraMoiLataffa", price:140, gender:"Mujer", category:"Dulce"},
+  {name:"YaraRosadaLataffa", price:140, gender:"Mujer", category:"Dulce"},
+  {name:"YumYumMoschino", price:130, gender:"Mujer", category:"Dulce"},
+  {name:"ChancheEauFraicheChanel", price:150, gender:"Mujer", category:"Fresco"},
+  {name:"ChancheEauTendreChanel", price:155, gender:"Mujer", category:"Floral"},
+  {name:"9PMCH", price:135, gender:"Hombre", category:"Dulce"},
+  {name:"212NYCCH", price:140, gender:"Hombre", category:"Amaderado"},
+  {name:"212VIPBlackCH", price:150, gender:"Hombre", category:"Dulce"},
+  {name:"212VIPRoseCH", price:155, gender:"Mujer", category:"Floral"},
+  {name:"AcquaDiGioGiorgioArmani", price:160, gender:"Hombre", category:"Cítrico"},
+  {name:"AhliKarpos", price:130, gender:"Unisex", category:"Oriental"},
+  {name:"AlluresSportChanel", price:140, gender:"Mujer", category:"Fresco"},
+  {name:"AmberOudGoldAlHaramain", price:150, gender:"Unisex", category:"Amaderado"},
+  {name:"AquaDubai", price:145, gender:"Unisex", category:"Fresco"},
+  {name:"ArtOfUniverse", price:135, gender:"Unisex", category:"Dulce"},
+  {name:"AssadLataffa", price:140, gender:"Hombre", category:"Amaderado"}
 ];
 
 let filteredPerfumes = [...perfumes];
@@ -113,9 +183,7 @@ window.onload = renderPerfumes;
 
 <section id="perfumes">
 <h2>Perfumes</h2>
-<div class="grid" id="perfume-grid">
-<!-- Se llena automáticamente con JS -->
-</div>
+<div class="grid" id="perfume-grid"></div>
 </section>
 
 <div id="cart">
