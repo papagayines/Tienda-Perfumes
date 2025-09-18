@@ -3,96 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfume</title>
+<title>Detalle de Perfume</title>
 <style>
-body { font-family:'Poppins', sans-serif; margin:0; background:#f9f9f9; color:#333; }
-header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
-header h1 { margin:0; font-size:1.8em; }
-main { max-width:900px; margin:20px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
-.perfume-img { width:100%; max-width:300px; display:block; margin:0 auto 20px; border-radius:12px; }
-h2 { text-align:center; color:#563d7c; }
-.description { margin:15px 0; font-size:1.1em; text-align:center; }
-.size-selection { display:flex; justify-content:center; gap:15px; margin:20px 0; }
-.size-selection button { padding:10px 15px; border:none; border-radius:10px; background:#f1e5f8; color:#563d7c; cursor:pointer; font-weight:bold; transition:0.3s; }
-.size-selection button.selected { background:#6b5b95; color:#fff; }
-.size-selection button:hover { background:#563d7c; color:#fff; }
-.price { text-align:center; font-size:1.5em; margin:10px 0; color:#6b5b95; font-weight:bold; }
-.add-cart { display:block; margin:0 auto; padding:12px 25px; font-size:1.1em; background:#6b5b95; color:#fff; border:none; border-radius:10px; cursor:pointer; transition:0.3s; }
-.add-cart:hover { background:#563d7c; }
+body { font-family: Arial, sans-serif; background-color: #f7f5f0; color:#333; margin:0; padding:0; }
+header { background-color:#d1c4b2; padding:20px; text-align:center; }
+h1 { margin:0; }
+.container { display:flex; flex-direction:column; align-items:center; padding:20px; }
+img { max-width:300px; border-radius:10px; margin-bottom:20px; }
+select, button { padding:10px; font-size:16px; margin:10px 0; border-radius:5px; border:none; }
+button { background-color:#8d6e63; color:white; cursor:pointer; }
+.description { max-width:500px; text-align:center; margin-bottom:20px; }
 </style>
 </head>
 <body>
-
 <header>
-<h1 id="perfume-name">Nombre Perfume</h1>
+  <h1 id="perfumeName">Perfume</h1>
 </header>
 
-<main>
-<img src="" alt="Perfume" class="perfume-img" id="perfume-img">
-<p class="description" id="perfume-desc">Descripción del perfume.</p>
+<div class="container">
+  <img id="perfumeImg" src="" alt="">
+  <p class="description" id="perfumeDesc"></p>
 
-<div class="size-selection">
-<button data-size="30" data-price="33000" class="selected">30 ml</button>
-<button data-size="50" data-price="45000">50 ml</button>
-<button data-size="110" data-price="90000">110 ml</button>
+  <label for="sizeSelect">Selecciona tamaño:</label>
+  <select id="sizeSelect">
+    <option value="33000">30 ml - 33.000 COP</option>
+    <option value="45000">50 ml - 45.000 COP</option>
+    <option value="90000">110 ml - 90.000 COP</option>
+  </select>
+
+  <button onclick="addToCart()">Agregar al carrito</button>
 </div>
 
-<p class="price" id="price">33.000 COP</p>
-<button class="add-cart" id="add-cart">Agregar al Carrito</button>
-</main>
-
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const perfumeName = urlParams.get('name') || "Perfume Desconocido";
-
+// Datos de perfumes: imagen y descripción
 const perfumeData = {
-    "AcquaDiGioGiorgioArmani": {
-        img: "img/AcquaDiGioGiorgioArmani.jpg",
-        desc: "El Acqua di Gio es un perfume muy fresco, excelente para días calurosos o de mucha actividad física."
-    },
-    "SauvageDior": {
-        img: "img/SauvageDior.jpg",
-        desc: "Sauvage es un aroma fuerte y moderno, ideal para la noche o eventos especiales."
-    }
-    // Aquí añades todos los 76 perfumes con img y desc
+  "AcquaDiGioGiorgioArmani": {img:"img/AcquaDiGioGiorgioArmani.jpg", desc:"Perfume muy fresco, excelente para días calurosos o de actividad física."},
+  "SauvageDior": {img:"img/SauvageDior.jpg", desc:"Fresco y amaderado, ideal para la noche."},
+  "CHMenCH": {img:"img/CHMenCH.jpg", desc:"Clásico, elegante y versátil para cualquier ocasión."},
+  "CKBe": {img:"img/CKBe.jpg", desc:"Unisex, suave y refrescante."},
+  "CloudArianaGrande": {img:"img/CloudArianaGrande.jpg", desc:"Dulce y suave, ideal para jóvenes."},
+  // ... Aquí agregas los 76 perfumes con img y desc
+  "BurberryHer": {img:"img/BurberryHer.jpg", desc:"Perfume femenino, frutal y elegante."}
 };
 
-const nameEl = document.getElementById("perfume-name");
-const imgEl = document.getElementById("perfume-img");
-const descEl = document.getElementById("perfume-desc");
-const priceEl = document.getElementById("price");
-const buttons = document.querySelectorAll(".size-selection button");
+// Obtener el perfume desde la URL
+const params = new URLSearchParams(window.location.search);
+const perfumeName = params.get("name");
 
-nameEl.textContent = perfumeName;
+// Mostrar datos
 if(perfumeData[perfumeName]){
-    imgEl.src = perfumeData[perfumeName].img;
-    descEl.textContent = perfumeData[perfumeName].desc;
+  document.getElementById("perfumeName").innerText = perfumeName.replace(/([A-Z])/g," $1").trim();
+  document.getElementById("perfumeImg").src = perfumeData[perfumeName].img;
+  document.getElementById("perfumeDesc").innerText = perfumeData[perfumeName].desc;
 } else {
-    imgEl.src = "img/default.jpg";
-    descEl.textContent = "Descripción no disponible.";
+  document.getElementById("perfumeName").innerText = "Perfume no encontrado";
 }
 
-// selección de tamaño
-let selectedSize = 30;
-let selectedPrice = 33000;
-buttons.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        buttons.forEach(b=>b.classList.remove("selected"));
-        btn.classList.add("selected");
-        selectedSize = parseInt(btn.dataset.size);
-        selectedPrice = parseInt(btn.dataset.price);
-        priceEl.textContent = selectedPrice.toLocaleString('es-CO') + " COP";
-    });
-});
-
-// agregar al carrito
-document.getElementById("add-cart").addEventListener("click", ()=>{
-    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    cart.push({name: perfumeName, size: selectedSize, price: selectedPrice, qty:1});
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Producto agregado al carrito!");
-});
+// Función agregar al carrito
+function addToCart(){
+  const sizeSelect = document.getElementById("sizeSelect");
+  const price = parseInt(sizeSelect.value);
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+  // Revisar si ya está en el carrito
+  const exist = cart.find(p => p.name===perfumeName && p.size===sizeSelect.selectedIndex);
+  if(exist){
+    exist.qty += 1;
+  } else {
+    cart.push({name:perfumeName, display:document.getElementById("perfumeName").innerText, size:sizeSelect.selectedIndex, price:price, qty:1});
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Producto agregado al carrito");
+}
 </script>
-
 </body>
 </html>
