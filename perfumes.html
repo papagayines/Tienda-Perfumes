@@ -3,111 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Parfumes - Detalle</title>
+<title>Nova Parfumes</title>
 <style>
-  body { font-family:'Poppins', sans-serif; background:#fdfcfb; color:#333; margin:0; padding:0; }
-  header { background:#6b5b95; color:#fff; text-align:center; padding:20px; }
-  header h1 { font-size:2em; }
-  main { max-width:800px; margin:30px auto; padding:0 20px; }
-  h2 { color:#563d7c; margin-bottom:15px; }
-  p { margin-bottom:10px; line-height:1.5; }
-  .notas { background:#f5f3f7; padding:15px; border-radius:12px; margin-bottom:15px; }
-  .sizes button { margin-right:8px; padding:8px 12px; border:none; border-radius:8px; background:#563d7c; color:#fff; cursor:pointer; transition:0.3s; }
-  .sizes button:hover { background:#6b5b95; }
-  .add-cart { display:block; margin-top:15px; padding:10px 15px; background:#ff7f50; color:#fff; border:none; border-radius:12px; cursor:pointer; transition:0.3s; }
-  .add-cart:hover { background:#ff6333; }
+body { font-family:'Poppins', sans-serif; margin:0; background:#fdfdfd; color:#333; }
+header { background:#6b5b95; color:#fff; padding:20px; text-align:center; }
+section { padding:40px 20px; max-width:900px; margin:0 auto; }
+h2 { color:#563d7c; text-align:center; }
+.container { display:flex; flex-direction:column; gap:20px; }
+#sizes button { margin-right:10px; padding:10px 15px; border:none; background:#7f5aa2; color:#fff; border-radius:8px; cursor:pointer; transition:0.3s; }
+#sizes button:hover { background:#6b5b95; }
+#addCart { padding:15px 20px; border:none; border-radius:8px; background:#563d7c; color:#fff; cursor:pointer; transition:0.3s; }
+#addCart:hover { background:#7f5aa2; }
+.cart-popup { display:none; position:fixed; top:20px; right:20px; background:#563d7c; color:#fff; padding:15px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2); animation:fadeIn 0.5s; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Nova Parfumes</h1>
+  <h1>Nova Parfumes</h1>
 </header>
 
-<main>
-  <h2 id="perfume-nombre">Nombre del Perfume</h2>
-  <p id="perfume-descripcion">Descripción breve del perfume.</p>
-  <div class="notas">
-    <p><strong>Notas de salida:</strong> <span id="nota-salida"></span></p>
-    <p><strong>Notas de corazón:</strong> <span id="nota-corazon"></span></p>
-    <p><strong>Notas de fondo:</strong> <span id="nota-fondo"></span></p>
+<section>
+  <h2 id="perfumeName">Perfume</h2>
+  <div class="container">
+    <img id="perfumeImg" src="" alt="" style="max-width:200px; margin:auto;">
+    <p id="perfumeDesc">Descripción del perfume...</p>
+    <p id="perfumeNotas">Notas: salida, corazón, fondo</p>
+    <div id="sizes">
+      <button onclick="selectSize(30,33000)">30 ml - 33.000 COP</button>
+      <button onclick="selectSize(50,45000)">50 ml - 45.000 COP</button>
+      <button onclick="selectSize(110,90000)">110 ml - 90.000 COP</button>
+    </div>
+    <button id="addCart" onclick="addToCart()">Agregar al carrito</button>
   </div>
-  <div class="sizes" id="sizes-container">
-    <!-- Botones de tamaños y precios -->
-  </div>
-  <button class="add-cart" id="add-cart-btn">Añadir al Carrito</button>
-</main>
+</section>
+
+<div class="cart-popup" id="cartPopup">Producto agregado al carrito</div>
 
 <script>
-  // --- Lista completa de perfumes ---
-  const perfumes = [
-    {
-      nombre:"Acqua Di Gio",
-      categoria:"Hombre",
-      descripcion:"Un perfume muy fresco, ideal para días calurosos o de actividad física intensa.",
-      notas:{ salida:"Cítricos", corazon:"Jazmín y Neroli", fondo:"Madera y Almizcle" },
-      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
-    },
-    {
-      nombre:"Miss Dior",
-      categoria:"Mujer",
-      descripcion:"Elegante y floral, perfecta para ocasiones especiales o románticas.",
-      notas:{ salida:"Mandarina y Bergamota", corazon:"Rosa y Jazmín", fondo:"Madera y Pachuli" },
-      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
-    },
-    {
-      nombre:"God Of Fire",
-      categoria:"Unisex",
-      descripcion:"Aromas intensos y especiados, ideal para noches especiales.",
-      notas:{ salida:"Bergamota y Pimienta", corazon:"Cardamomo y Sándalo", fondo:"Ámbar y Vainilla" },
-      precios:{ "30ml":33000, "50ml":45000, "110ml":90000 }
-    }
-    // ... Agregar todos los 76 perfumes
-  ];
+const perfumesData = {
+  "AcquaDiGioGiorgioArmani": {desc:"Perfume fresco, ideal para días calurosos o actividad física.", notas:"Salida: cítrica, Corazón: marina, Fondo: amaderado", img:"imagenes/acqua.jpg"},
+  "212NYCCH": {desc:"Elegante y moderno para hombre urbano.", notas:"Salida: cítrica, Corazón: floral, Fondo: amaderado", img:"imagenes/212nyc.jpg"},
+  // Agrega los 76 perfumes con su descripción y ruta de imagen
+};
 
-  // --- Obtener perfume de URL ---
-  const params = new URLSearchParams(window.location.search);
-  const nombreUrl = params.get('perfume'); // ejemplo: perfumes.html?perfume=Acqua%20Di%20Gio
-  const perfumeSeleccionado = perfumes.find(p => p.nombre.toLowerCase() === (nombreUrl||"").toLowerCase());
+let selectedSize = 30;
+let selectedPrice = 33000;
+const urlParams = new URLSearchParams(window.location.search);
+const perfumeName = urlParams.get('perfume');
+document.getElementById('perfumeName').innerText = perfumeName;
+document.getElementById('perfumeDesc').innerText = perfumesData[perfumeName]?.desc || "Descripción no disponible";
+document.getElementById('perfumeNotas').innerText = perfumesData[perfumeName]?.notas || "";
+document.getElementById('perfumeImg').src = perfumesData[perfumeName]?.img || "";
 
-  if(perfumeSeleccionado){
-    document.getElementById('perfume-nombre').textContent = perfumeSeleccionado.nombre;
-    document.getElementById('perfume-descripcion').textContent = perfumeSeleccionado.descripcion;
-    document.getElementById('nota-salida').textContent = perfumeSeleccionado.notas.salida;
-    document.getElementById('nota-corazon').textContent = perfumeSeleccionado.notas.corazon;
-    document.getElementById('nota-fondo').textContent = perfumeSeleccionado.notas.fondo;
+function selectSize(size, price){
+  selectedSize = size;
+  selectedPrice = price;
+}
 
-    const sizesContainer = document.getElementById('sizes-container');
-    Object.keys(perfumeSeleccionado.precios).forEach(size=>{
-      const btn = document.createElement("button");
-      btn.textContent = `${size} - $${perfumeSeleccionado.precios[size]}`;
-      btn.onclick = ()=>{ precioSeleccionado = perfumeSeleccionado.precios[size]; tamañoSeleccionado = size; };
-      sizesContainer.appendChild(btn);
-    });
-
-  } else {
-    document.querySelector('main').innerHTML = "<h2>Perfume no encontrado</h2><p>Verifica el enlace o vuelve al catálogo.</p>";
-  }
-
-  // --- Carrito ---
-  let carrito = [];
-  let precioSeleccionado = null;
-  let tamañoSeleccionado = null;
-
-  const addCartBtn = document.getElementById('add-cart-btn');
-  addCartBtn.addEventListener("click", ()=>{
-    if(!perfumeSeleccionado){ alert("No hay perfume seleccionado."); return; }
-    if(!tamañoSeleccionado){ alert("Selecciona un tamaño."); return; }
-
-    const itemIndex = carrito.findIndex(i=>i.nombre===perfumeSeleccionado.nombre && i.size===tamañoSeleccionado);
-    if(itemIndex>-1){
-      carrito[itemIndex].cantidad++;
-    }else{
-      carrito.push({nombre:perfumeSeleccionado.nombre, size:tamañoSeleccionado, precio:precioSeleccionado, cantidad:1});
-    }
-    alert(`Añadido al carrito: ${perfumeSeleccionado.nombre} (${tamañoSeleccionado})`);
-    console.log(carrito); // Para depuración
-  });
+function addToCart(){
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({name:perfumeName,size:selectedSize,price:selectedPrice});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  const popup = document.getElementById('cartPopup');
+  popup.style.display='block';
+  setTimeout(()=>{popup.style.display='none'},1500);
+  // Aquí puedes redireccionar al carrito o mostrar un resumen si quieres
+}
 </script>
 
 </body>
