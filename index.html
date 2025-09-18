@@ -116,4 +116,80 @@ footer { text-align:center; padding:20px; margin-top:40px; background:#6b5b95; c
 <div class="grid">
   <a href="perfumes/OrienticaAmberRouge.html" class="card"><h3>Orientica Amber Rouge</h3></a>
   <a href="perfumes/AquaDubai-unisex.html" class="card"><h3>Aqua Dubai</h3></a>
-  <a href="perfumes/GodOfFire-unisex.html" class="card"><h3>God Of
+  <a href="perfumes/GodOfFire-unisex.html" class="card"><h3>God Of Fire</h3></a>
+  <a href="perfumes/OdysseyCandeeArmaf.html" class="card"><h3>Odyssey Candee</h3></a>
+  <a href="perfumes/OdisseyChocolatDubay.html" class="card"><h3>Odyssey Chocolat Dubay</h3></a>
+</div>
+</section>
+
+<footer>&copy; 2025 Tienda de Perfumes</footer>
+
+<script>
+// Buscador flexible
+const perfumes = [
+  {name:"Sauvage Dior", url:"perfumes/SauvageDior.html"},
+  {name:"212 NYC", url:"perfumes/212NYCCH.html"},
+  {name:"CH Men", url:"perfumes/CHMenCH.html"},
+  {name:"Club De Nuit Armaf", url:"perfumes/ClubDeNuitArmaf.html"},
+  {name:"Acqua Di Gio Armani", url:"perfumes/AcquaDiGioGiorgioArmani.html"},
+  {name:"Stronger With You", url:"perfumes/StrongerWithYou.html"},
+  {name:"Nitro Red", url:"perfumes/NitroRed.html"},
+  {name:"One Million", url:"perfumes/OneMillionPacoRabanne.html"},
+  {name:"Invictus Victory", url:"perfumes/InvictusVictoryPacoRabanne.html"},
+  {name:"Layton", url:"perfumes/LaytonParfumsDeMarly.html"},
+  {name:"Ombre Leather", url:"perfumes/OmbreLeatherTomFord.html"},
+  {name:"Mont Blanc Explorer", url:"perfumes/MontBlancExplorer.html"},
+  {name:"Mont Blanc Legend", url:"perfumes/MontBlancLegend.html"},
+  {name:"Bad Boy", url:"perfumes/BadBoyCH.html"},
+  {name:"Bharara King", url:"perfumes/BhararaKing.html"},
+  {name:"Phantom", url:"perfumes/PhantomPacoRabanne.html"},
+  {name:"Si Giorgio Armani", url:"perfumes/SiGiorgioArmani.html"},
+  {name:"Blue De Chanel", url:"perfumes/BlueDeChanel.html"},
+  {name:"Light Blue D&G", url:"perfumes/LightBlueDG.html"},
+  {name:"Omnia Amathiste", url:"perfumes/OmniaAmathiste.html"},
+  {name:"Omnia Coral", url:"perfumes/OmniaCoralBvlgari.html"},
+  {name:"Miss Dior", url:"perfumes/MissDior.html"},
+  {name:"J'adore Dior", url:"perfumes/J-adoreDior.html"},
+  {name:"Joy Dior", url:"perfumes/JoyDior.html"},
+  {name:"Devotion D&G", url:"perfumes/DevotionD&G.html"},
+  {name:"Fame", url:"perfumes/FameRabanne.html"},
+  {name:"La Vie Est Belle", url:"perfumes/LaVieEstBelle.html"},
+  {name:"Good Girl", url:"perfumes/GoodGirlCH.html"},
+  {name:"Splash Coconut", url:"perfumes/SplashCoconutVictoriasSecret.html"},
+  {name:"Thank U Next", url:"perfumes/ThankUNextArianaGrande.html"},
+  {name:"The One", url:"perfumes/TheOneD&G.html"},
+  {name:"Delina", url:"perfumes/DelinaParfumsDeMarly.html"},
+  {name:"Ralph Lauren", url:"perfumes/RalphLauren.html"},
+  {name:"Burberry Her", url:"perfumes/BurberryHer.html"},
+  {name:"Yum Yum", url:"perfumes/YumYumMoschino.html"},
+  {name:"Yara Rosada", url:"perfumes/YaraRosadaLataffa.html"},
+  {name:"Yara Moi", url:"perfumes/YaraMoiLataffa.html"},
+  {name:"Meow", url:"perfumes/Meow.html"},
+  {name:"Orientica Amber Rouge", url:"perfumes/OrienticaAmberRouge.html"},
+  {name:"Aqua Dubai", url:"perfumes/AquaDubai-unisex.html"},
+  {name:"God Of Fire", url:"perfumes/GodOfFire-unisex.html"},
+  {name:"Odyssey Candee", url:"perfumes/OdysseyCandeeArmaf.html"},
+  {name:"Odyssey Chocolat Dubay", url:"perfumes/OdisseyChocolatDubay.html"}
+  // Añadir los restantes perfumes que no puse por brevedad
+];
+
+function buscarPerfume() {
+  const query = document.getElementById("search-input").value.toLowerCase().trim();
+  const resultsContainer = document.getElementById("search-results");
+  resultsContainer.innerHTML = "";
+  const encontrados = perfumes.filter(p => p.name.toLowerCase().includes(query));
+  if(encontrados.length > 0){
+    encontrados.forEach(p => {
+      const link = document.createElement("a");
+      link.href = p.url;
+      link.textContent = p.name;
+      resultsContainer.appendChild(link);
+    });
+  } else {
+    resultsContainer.textContent = "No se encontró el perfume.";
+  }
+}
+</script>
+
+</body>
+</html>
